@@ -1,5 +1,6 @@
 from conans import ConanFile, CMake, tools
 import version
+import os
 
 class NistppConan(ConanFile):
     name = "NISTPP"
@@ -7,13 +8,18 @@ class NistppConan(ConanFile):
     author = "Negodyaev Sergey (negodyaev.sergey@outlook.com)"
     description = "NIST test oc C++"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    options = {"shared": [True, False], "fPIC": [True, False], "enable_tests": [True, False]}
+    default_options = {"shared": False, "fPIC": True, "enable_tests": True}
     generators = ["cmake", "cmake_find_package", "cmake_paths"]
     exports = ["CMakeLists.txt", "version.py" "cmake/*"]
 
+    def requirements(self):
+        self.requires.add("boost/1.73.0")
+        if self.options.enable_tests:
+            self.requires.add("gtest/cci.20210126")
+
     def set_version(self):
-        self.version = version.get_version()
+        self.version = version.get_version(os.path.dirname(os.path.abspath(__file__)))
 
     def build(self):
         cmake = CMake(self)

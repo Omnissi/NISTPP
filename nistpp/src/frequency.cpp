@@ -1,0 +1,33 @@
+#include <nistpp/tests.h>
+
+#include <cmath>
+#include <numeric>
+
+#include "help_function.h"
+
+namespace nistpp
+{
+
+constexpr double  threshold     = 0.01;
+
+return_t FrequencyTest(const BitsStorage &data)
+{
+    static const double sqrt2 = std::sqrt(2.0);
+
+    const auto& bits        = data.GetBits();
+    const auto numberOfBits = data.NumberOfBits();
+
+    auto ones = std::accumulate(bits.begin(), bits.end(), 0,
+                                [](const auto& a, const auto& b)
+                                {
+                                    return a + b.count();
+                                });
+
+    int32_t Sn = 2 * ones - (numberOfBits);
+    double Sobs = static_cast<double>(std::abs(Sn)) / std::sqrt(numberOfBits);
+    double P    = std::erfc(Sobs/sqrt2);
+
+    return {P >= threshold, P};
+}
+
+} // namespace nistpp

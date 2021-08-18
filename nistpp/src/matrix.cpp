@@ -4,7 +4,6 @@
 
 #include <cstdio>
 #include <cmath>
-#include "NistTests.h"	//for macros
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
        M A T R I X   R A N K  A L G O R I T H M  F U N C T I O N  
@@ -97,8 +96,8 @@ static int determine_rank(int m, int M, int Q, char **A)
 int computeRank(int M, int Q, char **matrix)
 {
 	int		 i;
-	int		 rank;
-	int		 m=MIN(M,Q);
+    int		 rank;
+    int		 m=std::fmin(M,Q);
 	
 	/* FORWARD APPLICATION OF ELEMENTARY ROW OPERATIONS */ 
 	for ( i=0; i<m-1; i++ ) {

@@ -11,7 +11,9 @@ BitsStorage::BitsStorage(const sequence_t &data)
 
     for(const auto& el : data)
     {
-        bits_.emplace_back(el);
+        word_t tmp(el);
+        ones_ += tmp.count();
+        bits_.emplace_back(tmp);
     }
 }
 
@@ -25,7 +27,9 @@ void BitsStorage::SetSequenceByteBit(const sequence_t &data)
     bits_.reserve(tmp.size());
     for(auto it = tmp.begin(); it < tmp.end(); tmp += numberOfBitsInWord)
     {
-        bits_.emplace_back(std::string(it, it + numberOfBitsInWord));
+        word_t tmp(std::string(it, it + numberOfBitsInWord));
+        ones_ += tmp.count();
+        bits_.emplace_back(tmp);
     }
 }
 
@@ -43,18 +47,12 @@ const BitsStorage::bits_t &BitsStorage::GetBits() const
 
 size_t BitsStorage::NumberOfBits() const
 {
-    return bits_.size() * 8;
+    return bits_.size() * numberOfBitsInWord;
 }
 
 size_t BitsStorage::NumberOfOnes() const
 {
-    static auto ones = std::accumulate(bits_.begin(), bits_.end(), 0,
-                                [](const auto& a, const auto& b)
-                                {
-                                    return a + b.count();
-                                });
-
-    return static_cast<size_t>(ones);
+    return ones_;
 }
 
 } // namespace nistpp

@@ -2,6 +2,7 @@
 
 #include "tst_frequency.h"
 #include "tst_block_frequency.h"
+#include "tst_runs.h"
 
 int main(int argc, char *argv[])
 {

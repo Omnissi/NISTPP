@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <bitset>
+#include <memory>
 
 namespace nistpp
 {
@@ -39,6 +40,7 @@ public:
 
 private:
     bits_t bits_;
+    size_t ones_{0};
 };
 
 } // namespace nistpp

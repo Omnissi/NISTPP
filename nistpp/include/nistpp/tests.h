@@ -34,6 +34,17 @@ return_t FrequencyTest(const BitsStorage& data);
 /// @return @ref nistpp::return_t
 return_t BlockFrequencyTest(const BitsStorage& data, std::size_t M);
 
+/// @brief Runs Test.
+/// @details The focus of this test is the total number of runs in the sequence, where a run is an uninterrupted sequence
+/// of identical bits. A run of length k consists of exactly k identical bits and is bounded before and after with
+/// a bit of the opposite value. The purpose of the runs test is to determine whether the number of runs of
+/// ones and zeros of various lengths is as expected for a random sequence. In particular, this test determines
+/// whether the oscillation between such zeros and ones is too fast or too slow.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @return @ref nistpp::return_t
+return_t RunsTest(const BitsStorage& data);
+
 } // namespace nistpp
 
 #endif // TESTS_H

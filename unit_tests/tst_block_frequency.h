@@ -14,7 +14,7 @@ using namespace testing;
 
 TEST(block_freuqency, pass)
 {
-    constexpr double passPValue = 0.7064384496412808;
+    constexpr double passPValue = 0.7064384496412809;
     auto data = nistpp::ConvertStringToSequence("11001001000011111101101010100010001000010110100011"
                                                 "000010001101001100010011000110011000101000101110000000");
 

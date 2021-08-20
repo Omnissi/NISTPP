@@ -13,7 +13,8 @@ namespace nistpp
 class BitsStorage
 {
 public:
-    using word_t = std::bitset<8>;
+    static constexpr size_t numberOfBitsInWord = 8;
+    using word_t = std::bitset<numberOfBitsInWord>;
     using bits_t = std::vector<word_t>;
 
     BitsStorage() = default;
@@ -33,6 +34,8 @@ public:
     const bits_t& GetBits() const;
 
     size_t NumberOfBits() const;
+
+    size_t NumberOfOnes() const;
 
 private:
     bits_t bits_;

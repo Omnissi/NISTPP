@@ -16,9 +16,10 @@ add_executable(${PROJECT_NAME} main.cpp ${PROJ_TESTS})
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_defs})
 
-add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 target_link_libraries(${PROJECT_NAME} PRIVATE
         nistpp
         Threads::Threads
         GTest::GTest)
 
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME})

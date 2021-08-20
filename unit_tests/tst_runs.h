@@ -11,8 +11,7 @@
 
 using namespace testing;
 
-
-TEST(runs, pass)
+TEST(nistpp, runs)
 {
     constexpr double passPValue = 0.6953317934158357;
     auto data = nistpp::ConvertStringToSequence("11001001000011111101101010100010001000010110100011"

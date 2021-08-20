@@ -11,7 +11,8 @@ find_package(GTest REQUIRED)
 file(GLOB_RECURSE PROJ_TESTS
    tst_frequency.h
    tst_block_frequency.h
-   tst_runs.h)
+   tst_runs.h
+   tst_longest_run_of_ones.h)
 
 add_executable(${PROJECT_NAME} main.cpp ${PROJ_TESTS})
 

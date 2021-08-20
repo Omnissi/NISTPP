@@ -32,6 +32,7 @@ return_t FrequencyTest(const BitsStorage& data);
 /// @param[in] data Class contained sequnce for test.
 /// @param[in] M    The length of each block.
 /// @return @ref nistpp::return_t
+/// @throw std::invalid_argument If M > number of bits.
 return_t BlockFrequencyTest(const BitsStorage& data, std::size_t M);
 
 /// @brief Runs Test.
@@ -44,6 +45,17 @@ return_t BlockFrequencyTest(const BitsStorage& data, std::size_t M);
 /// @param[in] data Class contained sequnce for test.
 /// @return @ref nistpp::return_t
 return_t RunsTest(const BitsStorage& data);
+
+/// @brief Test for the Longest Run of Ones in a Block.
+/// @details The focus of the test is the longest run of ones within M-bit blocks. The purpose of this test is to
+/// determine whether the length of the longest run of ones within the tested sequence is consistent with the
+/// length of the longest run of ones that would be expected in a random sequence. Note that an irregularity in
+/// the expected length of the longest run of ones implies that there is also an irregularity in the expected
+/// length of the longest run of zeroes. Therefore, only a test for ones is necessary.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @return @ref nistpp::return_t
+return_t LongestRunOfOnesTest(const BitsStorage& data);
 
 } // namespace nistpp
 

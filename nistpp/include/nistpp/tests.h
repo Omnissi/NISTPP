@@ -57,6 +57,15 @@ return_t RunsTest(const BitsStorage& data);
 /// @return @ref nistpp::return_t
 return_t LongestRunOfOnesTest(const BitsStorage& data);
 
+/// @brief Binary Matrix Rank Test.
+/// @details The focus of the test is the rank of disjoint sub-matrices of the entire sequence. The purpose of this test is
+/// to check for linear dependence among fixed length substrings of the original sequence. Note that this test
+/// also appears in the DIEHARD battery of tests.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @return @ref nistpp::return_t
+return_t RankTest(const BitsStorage& data);
+
 } // namespace nistpp
 
 #endif // TESTS_H

@@ -1,8 +1,7 @@
 #include <nistpp/tests.h>
+#include <nistpp/math_helpers.h>
 
 #include <cmath>
-
-#include "help_function.h"
 
 namespace nistpp
 {
@@ -11,7 +10,7 @@ constexpr double  threshold     = 0.01;
 
 return_t FrequencyTest(const BitsStorage &data)
 {
-    static const double sqrt2 = std::sqrt(2.0);
+    static double sqrt2 = std::sqrt(2.0);
 
     const auto& bits        = data.GetBits();
     const auto numberOfBits = data.NumberOfBits();

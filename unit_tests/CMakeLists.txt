@@ -9,6 +9,7 @@ find_package(Boost COMPONENTS filesystem REQUIRED)
 find_package(GTest REQUIRED)
 
 file(GLOB_RECURSE PROJ_TESTS
+   tst_math_helpers.h
    tst_frequency.h
    tst_block_frequency.h
    tst_runs.h

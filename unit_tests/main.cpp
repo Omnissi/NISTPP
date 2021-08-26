@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include "tst_test_from_sequence.h"
 #include "tst_math_helpers.h"
 #include "tst_frequency.h"
 #include "tst_block_frequency.h"

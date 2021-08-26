@@ -1,9 +1,6 @@
 #include <nistpp/tests.h>
 #include <nistpp/math_helpers.h>
 
-#include <Eigen/Core>
-#include <Eigen/LU>
-
 #include <cmath>
 
 namespace nistpp
@@ -16,27 +13,175 @@ template<std::size_t M, std::size_t Q>
 class BitsMatrix
 {
 public:
-    using matrix_t = Eigen::Matrix<float, M, Q>;
+    using rows_t    = std::bitset<Q>;
+    using matrix_t  = std::array<rows_t, M>;
     BitsMatrix(const BitsStorage& data, std::size_t k)
     {
         for(size_t i = 0; i < M; ++i)
         {
+            auto& bits = matrix_[i];
             for(size_t j = 0; j < Q; ++j)
             {
-                matrix_(i, j) = data[k * (M*Q) + j + i * M];
+                bits[j] = data[k * (M*Q) + j + i * Q];
             }
         }
     }
 
-    std::size_t rank()
+    rows_t& operator[](std::size_t ind)
     {
-        Eigen::FullPivLU<matrix_t> tmp(matrix_);
-        return tmp.rank();
+        return matrix_[ind];
+    }
+
+    void swap_rows(std::size_t a, std::size_t b)
+    {
+        std::swap(matrix_[a], matrix_[b]);
     }
 
 private:
     matrix_t matrix_;
 };
+
+template<std::size_t M, std::size_t Q>
+void perform_elementary_row_operations_forward(const std::size_t& i, BitsMatrix<M, Q>& matrix)
+{
+    auto& bits_i = matrix[i];
+    for (std::size_t j = i+1; j < M;  ++j)
+    {
+        if ( matrix[j][i] == 1 )
+        {
+            auto& bits = matrix[j];
+            for (std::size_t k=i; k < Q; ++k)
+            {
+                bits[k] = (bits[k] + bits_i[k]) % 2;
+            }
+        }
+    }
+}
+
+template<std::size_t M, std::size_t Q>
+void perform_elementary_row_operations_backward(const std::size_t& i, BitsMatrix<M, Q>& matrix)
+{
+    auto& bits_i = matrix[i];
+    for(int j = i-1; j >= 0; --j)
+    {
+        if(matrix[j][i] == 1)
+        {
+            auto& bits = matrix[j];
+            for(std::size_t k = 0; k < Q; ++k)
+            {
+                bits[k] = (bits[k] + bits_i[k]) % 2;
+            }
+        }
+    }
+}
+
+template<std::size_t M, std::size_t Q>
+std::size_t find_unit_element_and_swap_forward(const std::size_t& i, BitsMatrix<M, Q>& matrix)
+{
+    std::size_t row_op = 0;
+
+    std::size_t index = i + 1;
+    while((index < M) && (matrix[index][i] == 0))
+    {
+        ++index;
+    }
+    if(index < M)
+    {
+        matrix.swap_rows(i, index);
+        return 1;
+    }
+
+    return 0;
+}
+
+template<std::size_t M, std::size_t Q>
+std::size_t find_unit_element_and_swap_backward(const std::size_t& i, BitsMatrix<M, Q>& matrix)
+{
+    int index = i-1;
+    while ((index >= 0) && (matrix[index][i] == 0))
+    {
+        --index;
+    }
+
+    if ( index >= 0 )
+    {
+        matrix.swap_rows(i, index);
+        return 1;
+    }
+
+    return 0;
+}
+
+template<std::size_t M, std::size_t Q>
+std::size_t determine_rank(BitsMatrix<M, Q>& matrix)
+{
+    /* DETERMINE RANK, THAT IS, COUNT THE NUMBER OF NONZERO ROWS */
+
+    std::size_t rank = std::min(M, Q);
+    for(std::size_t i = 0; i < M; ++i)
+    {
+        bool allZeroes = true;
+        auto& bits = matrix[i];
+        for (std::size_t j = 0; j < Q; ++j)
+        {
+            if(bits[j] == 1)
+            {
+                allZeroes = false;
+                break;
+            }
+        }
+
+        if(allZeroes)
+        {
+            --rank;
+        }
+    }
+
+    return rank;
+}
+
+template<std::size_t M, std::size_t Q>
+std::size_t computeRank(BitsMatrix<M, Q>& matrix)
+{
+    std::size_t rank = 0;
+    constexpr auto m  = std::min(M,Q);
+
+    /* FORWARD APPLICATION OF ELEMENTARY ROW OPERATIONS */
+    for(std::size_t i = 0; i < m-1; ++i)
+    {
+        if(matrix[i][i])
+        {
+            perform_elementary_row_operations_forward(i, matrix);
+        }
+        else
+        {
+            if(find_unit_element_and_swap_forward(i, matrix) == 1)
+            {
+                perform_elementary_row_operations_forward(i, matrix);
+            }
+        }
+    }
+
+    /* BACKWARD APPLICATION OF ELEMENTARY ROW OPERATIONS */
+    for (size_t i= m-1; i > 0; --i )
+    {
+        if (matrix[i][i] == 1)
+        {
+            perform_elementary_row_operations_backward(i, matrix);
+        }
+        else
+        {
+            if (find_unit_element_and_swap_backward(i, matrix) == 1)
+            {
+                perform_elementary_row_operations_backward(i, matrix);
+            }
+        }
+    }
+
+    rank = determine_rank(matrix);
+
+    return rank;
+}
 
 constexpr double calcProduct(int32_t r)
 {
@@ -70,7 +215,7 @@ return_t RankTest(const BitsStorage &data)
     for(std::size_t k = 0; k < N; ++k)
     {
         BitsMatrix<32, 32> matrix(data, k);
-        auto rank = matrix.rank();
+        auto rank = computeRank(matrix);
 
         if(rank == 32)
         {

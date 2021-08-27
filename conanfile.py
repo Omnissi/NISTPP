@@ -15,7 +15,6 @@ class NistppConan(ConanFile):
 
     def requirements(self):
         self.requires.add("boost/1.73.0")
-        self.requires.add("eigen/3.4.0")
         if self.options.enable_tests:
             self.requires.add("gtest/cci.20210126")
 

@@ -38,7 +38,7 @@ return_t BlockFrequencyTest(const BitsStorage &data, std::size_t M)
     double chi_squared = 4.0 * M * sum;
     double P           = boost::math::gamma_q(numberOfBlocks/2.0, chi_squared/2.0);
 
-    return {P > threshold, P};
+    return {P >= threshold, P};
 }
 
 } // namespace nistpp

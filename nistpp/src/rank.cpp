@@ -17,12 +17,14 @@ public:
     using matrix_t  = std::array<rows_t, M>;
     BitsMatrix(const BitsStorage& data, std::size_t k)
     {
+        const auto ind_k = k * (M*Q);
         for(size_t i = 0; i < M; ++i)
         {
+            const auto ind_i = i * Q;
             auto& bits = matrix_[i];
             for(size_t j = 0; j < Q; ++j)
             {
-                bits[j] = data[k * (M*Q) + j + i * Q];
+                bits[j] = data[ind_k + j + ind_i];
             }
         }
     }

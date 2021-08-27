@@ -92,4 +92,10 @@ TEST_F(nistpp_sequence_test, rank)
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.577829));
 }
 
+TEST_F(nistpp_sequence_test, fft)
+{
+    auto res = nistpp::FftTest(*bitsStorage_);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.163062));
+}
 #endif // TST_TEST_FROM_SEQUENCE_H

@@ -66,6 +66,16 @@ return_t LongestRunOfOnesTest(const BitsStorage& data);
 /// @return @ref nistpp::return_t
 return_t RankTest(const BitsStorage& data);
 
+/// @brief Discrete Fourier Transform (Spectral) Test.
+/// @details The focus of this test is the peak heights in the Discrete Fourier Transform of the sequence. The purpose
+/// of this test is to detect periodic features (i.e., repetitive patterns that are near each other) in the tested
+/// sequence that would indicate a deviation from the assumption of randomness. The intention is to detect
+/// whether the number of peaks exceeding the 95 % threshold is significantly different than 5 %.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @return @ref nistpp::return_t
+return_t FftTest(const BitsStorage& data);
+
 } // namespace nistpp
 
 #endif // TESTS_H

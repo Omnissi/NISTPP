@@ -1,6 +1,8 @@
 #include <nistpp/tests.h>
 #include <nistpp/math_helpers.h>
 
+#include <sprout/math.hpp>
+
 #include <cmath>
 
 namespace nistpp
@@ -189,13 +191,15 @@ constexpr double calcProduct(int32_t r)
 {
     double res = 1;
     for(int32_t i = 0; i <= r-1; ++i)
-        res *= nistpp::const_pow(1.0 - static_cast<double>(nistpp::const_pow(2, i-32)), 2) / (1.0 - nistpp::const_pow(2, i-r));
+    {
+        res *= sprout::pow(1.0 - static_cast<double>(sprout::pow(2, i-32)), 2) / (1.0 - sprout::pow(2, i-r));
+    }
     return res;
 }
 
 constexpr double pNumber(int32_t r)
 {
-    return nistpp::const_pow(2, r*(32+32-r) - 32*32) * calcProduct(r);
+    return sprout::pow(2, r*(32+32-r) - 32*32) * calcProduct(r);
 }
 
 return_t RankTest(const BitsStorage &data)

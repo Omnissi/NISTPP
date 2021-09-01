@@ -76,6 +76,18 @@ return_t RankTest(const BitsStorage& data);
 /// @return @ref nistpp::return_t
 return_t FftTest(const BitsStorage& data);
 
+/// @brief Non-overlapping Template Matching Test.
+/// @details The focus of this test is the number of occurrences of pre-specified target strings. The purpose of this
+/// test is to detect generators that produce too many occurrences of a given non-periodic (aperiodic) pattern.
+/// For this test and for the Overlapping Template Matching test, an m-bit window is used to
+/// search for a specific m-bit pattern. If the pattern is not found, the window slides one bit position. If the
+/// pattern is found, the window is reset to the bit after the found pattern, and the search resumes.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @param[in] m    The length in bits of each template.
+/// @return @ref nistpp::return_t
+return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m);
+
 } // namespace nistpp
 
 #endif // TESTS_H

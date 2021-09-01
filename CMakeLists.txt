@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Sprout/)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/nistpp/include)
 
 add_subdirectory(nistpp)

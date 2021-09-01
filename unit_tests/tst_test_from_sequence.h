@@ -98,4 +98,13 @@ TEST_F(nistpp_sequence_test, fft)
 
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.163062));
 }
+
+TEST_F(nistpp_sequence_test, nonOverlapping)
+{
+    auto res = nistpp::NonOverlappingTemplateTest(*bitsStorage_, 9);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.496601));
+}
+
+
 #endif // TST_TEST_FROM_SEQUENCE_H

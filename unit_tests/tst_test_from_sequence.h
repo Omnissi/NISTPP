@@ -101,9 +101,10 @@ TEST_F(nistpp_sequence_test, fft)
 
 TEST_F(nistpp_sequence_test, nonOverlapping)
 {
-    auto res = nistpp::NonOverlappingTemplateTest(*bitsStorage_, 9);
+    std::vector<double> P;
+    auto res = nistpp::NonOverlappingTemplateTest(*bitsStorage_, 9, P);
 
-    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.496601));
+    EXPECT_TRUE(EqualWithNistPValue(P[0], 0.496601));
 }
 
 

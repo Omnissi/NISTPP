@@ -16,7 +16,7 @@ class BitsStorage
 public:
     static constexpr size_t numberOfBitsInWord = 8;
     using word_t = std::bitset<numberOfBitsInWord>;
-    using bits_t = std::vector<word_t>;
+    using bits_t = std::vector<bool>;
 
     BitsStorage() = default;
     ~BitsStorage() = default;

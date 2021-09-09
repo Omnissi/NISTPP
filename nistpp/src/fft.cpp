@@ -66,15 +66,9 @@ return_t FftTest(const BitsStorage &data)
 
 //    CArray x(N);
     std::vector<double> x(N);
-    const auto& bits = data.GetBits();
-    for(std::size_t i = 0; i < bits.size(); ++i)
+    for(std::size_t i = 0; i < N; ++i)
     {
-        const auto& word = bits[i];
-        const auto ind_i = i * BitsStorage::numberOfBitsInWord;
-        for(std::size_t j = 0; j < BitsStorage::numberOfBitsInWord; ++j)
-        {
-            x[ind_i + j] = word[BitsStorage::numberOfBitsInWord - 1 - j] ? 1 : -1;
-        }
+        x[i] = data[i] ? 1 : -1;
     }
 
     std::vector<double> wsave(2*N);

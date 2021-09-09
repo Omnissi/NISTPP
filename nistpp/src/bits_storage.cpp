@@ -7,13 +7,16 @@ namespace nistpp
 
 BitsStorage::BitsStorage(const sequence_t &data)
 {
-    bits_.reserve(data.size());
+    bits_.reserve(data.size() * numberOfBitsInWord);
 
     for(const auto& el : data)
     {
         word_t tmp(el);
         ones_ += tmp.count();
-        bits_.emplace_back(tmp);
+        for(int32_t i = numberOfBitsInWord - 1; i >= 0; --i)
+        {
+            bits_.emplace_back(tmp[i]);
+        }
     }
 }
 
@@ -29,15 +32,19 @@ void BitsStorage::SetSequenceByteBit(const sequence_t &data)
     {
         word_t tmp(std::string(it, it + numberOfBitsInWord));
         ones_ += tmp.count();
-        bits_.emplace_back(tmp);
+        for(int32_t i = numberOfBitsInWord - 1; i >= 0; --i)
+        {
+            bits_.emplace_back(tmp[i]);
+        }
     }
 }
 
 uint8_t BitsStorage::operator[](size_t index) const
 {
-    auto div = std::div(index, static_cast<int32_t>(numberOfBitsInWord));
+//    auto div = std::div(index, static_cast<int32_t>(numberOfBitsInWord));
 
-    return bits_[div.quot][numberOfBitsInWord - 1 - div.rem];
+//    return bits_[div.quot][numberOfBitsInWord - 1 - div.rem];
+    return bits_[index];
 }
 
 const BitsStorage::bits_t &BitsStorage::GetBits() const
@@ -47,7 +54,7 @@ const BitsStorage::bits_t &BitsStorage::GetBits() const
 
 size_t BitsStorage::NumberOfBits() const
 {
-    return bits_.size() * numberOfBitsInWord;
+    return bits_.size();
 }
 
 size_t BitsStorage::NumberOfOnes() const

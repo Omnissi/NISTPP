@@ -85,8 +85,9 @@ return_t FftTest(const BitsStorage& data);
 ///
 /// @param[in] data Class contained sequnce for test.
 /// @param[in] m    The length in bits of each template.
+/// @param[out] P   Array P-value for all rows in template.
 /// @return @ref nistpp::return_t
-return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m);
+return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std::vector<double>& P);
 
 } // namespace nistpp
 

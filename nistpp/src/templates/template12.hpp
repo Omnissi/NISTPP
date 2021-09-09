@@ -4,7 +4,7 @@
 
 namespace nistpp
 {
-static constexpr sprout::valarray<sprout::valarray<bool, 12>, 1116> template12=
+static constexpr sprout::valarray<sprout::valarray<uint8_t, 12>, 1116> template12=
 {
     {0,0,0,0,0,0,0,0,0,0,0,1},
     {0,0,0,0,0,0,0,0,0,0,1,1},

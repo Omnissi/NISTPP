@@ -12,7 +12,6 @@ constexpr double  threshold     = 0.01;
 
 return_t FrequencyTest(const BitsStorage &data)
 {
-    const auto& bits        = data.GetBits();
     const auto numberOfBits = data.NumberOfBits();
     const auto ones         = data.NumberOfOnes();
 

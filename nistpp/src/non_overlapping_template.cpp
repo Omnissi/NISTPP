@@ -7,8 +7,6 @@
 
 #include <cmath>
 
-#include <iostream>
-
 #include <boost/math/special_functions/gamma.hpp>
 
 namespace nistpp
@@ -28,7 +26,6 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
     const auto numberOfBits = data.NumberOfBits();
     const size_t M = numberOfBits/N;
 
-    std::vector<uint32_t> Wj(N);
 
     const double lambda   = (M-m+1)/pow(2, m);
     const double varWj    = M*(1.0/pow(2.0, m) - (2.0*m-1.0)/pow(2.0, 2.0*m));
@@ -40,8 +37,12 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
     P.resize(numberOfRows);
     double minP = std::numeric_limits<double>::max();
     auto bits   = data.GetBits();
-    for(std::size_t i = 0; i < std::min(numberOfRows, maxNumOfTemplates) ; ++i)
+    numberOfRows = std::min(numberOfRows, maxNumOfTemplates);
+
+#pragma omp parallel for
+    for(std::size_t i = 0; i < numberOfRows; ++i)
     {
+        std::vector<uint32_t> Wj(N);
         auto begin  = bits.begin();
         auto end    = begin + m;
 

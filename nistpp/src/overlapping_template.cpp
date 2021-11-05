@@ -36,7 +36,7 @@ return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m)
 {
     constexpr std::size_t K = 5;
     constexpr std::size_t M = 1032;
-    const     std::size_t N = /*data.NumberOfBits()*/1e6 / M;
+    const     std::size_t N = data.NumberOfBits() / M;
 
     std::array<double, 6> pi = {};
     {

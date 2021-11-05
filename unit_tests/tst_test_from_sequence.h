@@ -17,7 +17,7 @@ protected:
     void SetUp()
     {
         boost::filesystem::path path(std::string(FILE_PREFIX) + std::string("/data.sha1"));
-        if( !boost::filesystem::exists( path ) )
+        if(!boost::filesystem::exists(path))
         {
             FAIL() << "File [" << path.c_str() << "] doesn't exist!";
         }
@@ -107,5 +107,11 @@ TEST_F(nistpp_sequence_test, nonOverlapping)
     EXPECT_TRUE(EqualWithNistPValue(P[0], 0.496601));
 }
 
+TEST_F(nistpp_sequence_test, Overlapping)
+{
+    auto res = nistpp::OverlappingTemplateTest(*bitsStorage_, 9);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.339426));
+}
 
 #endif // TST_TEST_FROM_SEQUENCE_H

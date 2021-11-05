@@ -89,6 +89,18 @@ return_t FftTest(const BitsStorage& data);
 /// @return @ref nistpp::return_t
 return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std::vector<double>& P);
 
+/// @brief Overlapping Template Matching Test.
+/// @details The focus of the Overlapping Template Matching test is the number of occurrences of pre-specified target
+/// strings. Both this test and the Non-overlapping Template Matching test of Section 2.7 use an m-bit
+/// window to search for a specific m-bit pattern. As with the test in Section 2.7, if the pattern is not found,
+/// the window slides one bit position. The difference between this test and the test in Section 2.7 is that
+/// when the pattern is found, the window slides only one bit before resuming the search.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @param[in] m    The length in bits of each template.
+/// @return @ref nistpp::return_t
+return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m);
+
 } // namespace nistpp
 
 #endif // TESTS_H

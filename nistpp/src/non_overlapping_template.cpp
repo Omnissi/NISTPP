@@ -12,7 +12,7 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
+constexpr double  threshold             = 0.01;
 constexpr std::size_t maxNumOfTemplates = 148;
 
 return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std::vector<double> &P)
@@ -35,8 +35,8 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
     auto funcTempl = GetTemplatesFunction(m, numberOfRows);
 
     P.resize(numberOfRows);
-    double minP = std::numeric_limits<double>::max();
-    auto bits   = data.GetBits();
+    double minP  = std::numeric_limits<double>::max();
+    auto bits    = data.GetBits();
     numberOfRows = std::min(numberOfRows, maxNumOfTemplates);
 
 #pragma omp parallel for

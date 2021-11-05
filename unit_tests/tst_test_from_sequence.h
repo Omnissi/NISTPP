@@ -34,7 +34,7 @@ protected:
 
         while(size < tmp.size())
         {
-            auto err = stream.readsome(reinterpret_cast<char*>(tmp.data()), tmp.size());
+            auto err = stream.readsome(reinterpret_cast<char*>(tmp.data()) + size, tmp.size() - size);
             if(err < 0)
             {
                 FAIL() << "Error read sequence";

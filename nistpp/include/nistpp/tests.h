@@ -7,6 +7,7 @@
 #ifndef TESTS_H
 #define TESTS_H
 
+#include <cstddef>
 #include <nistpp/bits_storage.h>
 #include <nistpp/types.h>
 
@@ -100,6 +101,15 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
 /// @param[in] m    The length in bits of each template.
 /// @return @ref nistpp::return_t
 return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m);
+
+/// @brief Maurer’s “Universal Statistical”.
+/// @details The focus of this test is the number of bits between matching patterns (a measure that is related to the
+/// length of a compressed sequence). The purpose of the test is to detect whether or not the sequence can be
+/// significantly compressed without loss of information. A significantly compressible sequence is
+/// considered to be non-random.
+/// @param[in] data Class contained sequnce for test.
+/// @return @ref nistpp::return_t
+return_t UniversalTest(const BitsStorage& data);
 
 } // namespace nistpp
 

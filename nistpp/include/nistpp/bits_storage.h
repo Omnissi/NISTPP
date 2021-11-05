@@ -21,6 +21,9 @@ public:
     BitsStorage() = default;
     ~BitsStorage() = default;
 
+    BitsStorage(const BitsStorage&) = delete;
+    BitsStorage(BitsStorage&&) noexcept = delete;
+
     /// @brief Class constructer.
     /// @param[in] data Data for tests. (1 byte = 1 byte data)
     BitsStorage(const sequence_t& data);

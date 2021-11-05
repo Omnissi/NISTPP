@@ -114,4 +114,11 @@ TEST_F(nistpp_sequence_test, Overlapping)
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.339426));
 }
 
+TEST_F(nistpp_sequence_test, Universal)
+{
+    auto res = nistpp::UniversalTest(*bitsStorage_);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.411079));
+}
+
 #endif // TST_TEST_FROM_SEQUENCE_H

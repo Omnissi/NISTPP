@@ -121,4 +121,11 @@ TEST_F(nistpp_sequence_test, Universal)
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.411079));
 }
 
+TEST_F(nistpp_sequence_test, Linear)
+{
+    auto res = nistpp::LinearComplexityTest(*bitsStorage_, 500);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.309412));
+}
+
 #endif // TST_TEST_FROM_SEQUENCE_H

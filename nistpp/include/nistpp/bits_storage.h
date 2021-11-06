@@ -37,6 +37,8 @@ public:
 
     const bits_t& GetBits() const;
 
+    bits_t& GetBits() { return bits_; }
+
     size_t NumberOfBits() const;
 
     size_t NumberOfOnes() const;

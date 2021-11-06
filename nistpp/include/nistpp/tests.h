@@ -107,9 +107,20 @@ return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m);
 /// length of a compressed sequence). The purpose of the test is to detect whether or not the sequence can be
 /// significantly compressed without loss of information. A significantly compressible sequence is
 /// considered to be non-random.
+///
 /// @param[in] data Class contained sequnce for test.
 /// @return @ref nistpp::return_t
 return_t UniversalTest(const BitsStorage& data);
+
+/// @brief Linear Complexity Test.
+/// @details The focus of this test is the length of a linear feedback shift register (LFSR). The purpose of this test is to
+/// determine whether or not the sequence is complex enough to be considered random. Random sequences
+/// are characterized by longer LFSRs. An LFSR that is too short implies non-randomness.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @param[in] M    The length in bits of a block.
+/// @return @ref nistpp::return_t
+return_t LinearComplexityTest(const BitsStorage& data, std::size_t M);
 
 } // namespace nistpp
 

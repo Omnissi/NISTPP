@@ -15,7 +15,8 @@ file(GLOB_RECURSE PROJ_TESTS
    tst_block_frequency.h
    tst_runs.h
    tst_longest_run_of_ones.h
-   tst_non_overlapping_template.h)
+   tst_non_overlapping_template.h
+   tst_linear.h)
 
 set(${PROJECT_NAME}_defs FILE_PREFIX="${CMAKE_CURRENT_SOURCE_DIR}/files")
 

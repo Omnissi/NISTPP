@@ -28,7 +28,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         nistpp
         Boost::filesystem
         Threads::Threads
-        GTest::GTest)
+        GTest::GTest
+        OpenMP::OpenMP_CXX)
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME})

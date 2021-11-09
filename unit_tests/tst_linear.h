@@ -44,7 +44,7 @@ TEST(nistpp, linear)
 
     auto t = nistpp::LinearComplexityTest(bits, 1000);
 
-    EXPECT_TRUE(true);
+    EXPECT_TRUE(std::fabs(std::get<1>(t) - 0.845406) < 1e-6);
 }
 
 #endif // TST_LINEAR_H

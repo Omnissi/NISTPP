@@ -128,4 +128,11 @@ TEST_F(nistpp_sequence_test, Linear)
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.309412));
 }
 
+TEST_F(nistpp_sequence_test, Serial)
+{
+    auto res = nistpp::SerialTest(*bitsStorage_, 16);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.760793));
+}
+
 #endif // TST_TEST_FROM_SEQUENCE_H

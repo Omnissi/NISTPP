@@ -135,4 +135,11 @@ TEST_F(nistpp_sequence_test, Serial)
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.760793));
 }
 
+TEST_F(nistpp_sequence_test, Approximate)
+{
+    auto res = nistpp::ApproximateEntropyTest(*bitsStorage_, 10);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.982885));
+}
+
 #endif // TST_TEST_FROM_SEQUENCE_H

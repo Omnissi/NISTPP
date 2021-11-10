@@ -31,13 +31,19 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
 
     const auto& bits = data.GetBits();
 
-#define fill_zero(arr) std::fill(arr.begin(), arr.end(), 0)
     for(std::size_t i = 0; i < N; ++i)
     {
-        fill_zero(T);
-        fill_zero(C);
-        fill_zero(P);
-        fill_zero(B);
+        for(std::size_t j = 0; j < M; ++j)
+        {
+            T[j] = 0;
+            C[j] = 0;
+            P[j] = 0;
+            B[j] = 0;
+        }
+//        fill_zero(T);
+//        fill_zero(C);
+//        fill_zero(P);
+//        fill_zero(B);
 
         C[0] = 1;
         B[0] = 1;
@@ -64,7 +70,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
             {
                 // This solution is slow
                 //std::copy(C.begin(), C.end(), T.begin());
-                //fill_zero(P);
+                //std::fill(P.begin(), P.end(), 0);
                 // This is faster
                 for(std::size_t j = 0; j < M; ++j)
                 {
@@ -113,7 +119,6 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
         else
             ++nu[6];
     }
-#undef fill_zero
 
     double chi2 = 0;
     for(std::size_t i = 0; i < K + 1; ++i)

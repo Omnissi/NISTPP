@@ -1,11 +1,12 @@
 #ifndef TEMPLATE_15_H
 #define TEMPLATE_15_H
-#include <sprout/valarray.hpp>
+
+#include <array>
 
 namespace nistpp
 {
-static constexpr sprout::valarray<sprout::valarray<uint8_t, 15>, 8848> template15=
-{
+static constexpr std::array<std::array<uint8_t, 15>, 8848> template15=
+{{
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
     {0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
@@ -8854,7 +8855,7 @@ static constexpr sprout::valarray<sprout::valarray<uint8_t, 15>, 8848> template1
     {1,1,1,1,1,1,1,1,1,1,1,1,0,1,0},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-};
+}};
 } // namespace nistpp
 
 #endif // TEMPLATE_15_H

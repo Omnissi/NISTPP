@@ -15,118 +15,59 @@
 #include "template14.hpp"
 #include "template15.hpp"
 #include "template16.hpp"
+#include <cstddef>
 
 namespace nistpp
 {
 
-template<class templ_t, class It>
-bool templateEqual(std::size_t i, const templ_t templ, It begin, It end)
+std::pair<iterator_t, iterator_t> GetTemplatesSequence(std::size_t i, std::size_t m)
 {
-    if(static_cast<size_t>(std::distance(begin, end)) != templ[0].size())
+#define ret_it(templ) { templ[i].begin(), templ[i].end() }
+    switch (m)
     {
-        throw std::logic_error("Input iterators incorrect!");
+    case 2: return ret_it(template2);
+    case 3: return ret_it(template3);
+    case 4: return ret_it(template4);
+    case 5: return ret_it(template5);
+    case 6: return ret_it(template6);
+    case 7: return ret_it(template7);
+    case 8: return ret_it(template8);;
+    case 9: return ret_it(template9);;
+    case 10: return ret_it(template10);;
+    case 11: return ret_it(template11);;
+    case 12: return ret_it(template12);;
+    case 13: return ret_it(template13);;
+    case 14: return ret_it(template14);;
+    case 15: return ret_it(template15);;
+    case 16: return ret_it(template16);;
     }
+#undef ret_it
 
-    return std::equal(templ[i].begin(), templ[i].end(), begin, end);
+    return {nullptr, nullptr};
 }
 
-bool templateEqual2(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template2, begin, end);
-}
-
-bool templateEqual3(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template3, begin, end);
-}
-
-bool templateEqual4(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template4, begin, end);
-}
-
-bool templateEqual5(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template5, begin, end);
-}
-
-bool templateEqual6(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template6, begin, end);
-}
-
-bool templateEqual7(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template7, begin, end);
-}
-
-bool templateEqual8(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template8, begin, end);
-}
-
-bool templateEqual9(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template9, begin, end);
-}
-
-bool templateEqual10(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template10, begin, end);
-}
-
-bool templateEqual11(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template11, begin, end);
-}
-
-bool templateEqual12(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template12, begin, end);
-}
-
-bool templateEqual13(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template13, begin, end);
-}
-
-bool templateEqual14(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template14, begin, end);
-}
-
-bool templateEqual15(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template15, begin, end);
-}
-
-bool templateEqual16(std::size_t i, BitsStorage::bits_t::const_iterator begin, BitsStorage::bits_t::const_iterator end)
-{
-    return templateEqual(i, template16, begin, end);
-}
-
-templ_func_t GetTemplatesFunction(std::size_t m, std::size_t& numberOfRows)
+std::size_t GetNumberOfRows(std::size_t m)
 {
     switch (m)
     {
-    case 2: numberOfRows = template2.size(); return std::bind(templateEqual2, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 3: numberOfRows = template3.size(); return std::bind(templateEqual3, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 4: numberOfRows = template4.size(); return std::bind(templateEqual4, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 5: numberOfRows = template5.size(); return std::bind(templateEqual5, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 6: numberOfRows = template6.size(); return std::bind(templateEqual6, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 7: numberOfRows = template7.size(); return std::bind(templateEqual7, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 8: numberOfRows = template8.size(); return std::bind(templateEqual8, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 9: numberOfRows = template9.size(); return std::bind(templateEqual9, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 10: numberOfRows = template10.size(); return std::bind(templateEqual10, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 11: numberOfRows = template11.size(); return std::bind(templateEqual11, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 12: numberOfRows = template12.size(); return std::bind(templateEqual12, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 13: numberOfRows = template13.size(); return std::bind(templateEqual13, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 14: numberOfRows = template14.size(); return std::bind(templateEqual14, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 15: numberOfRows = template15.size(); return std::bind(templateEqual15, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-    case 16: numberOfRows = template16.size(); return std::bind(templateEqual16, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    case 2: return template2.size();
+    case 3: return template3.size();
+    case 4: return template4.size();
+    case 5: return template5.size();
+    case 6: return template6.size();
+    case 7: return template7.size();
+    case 8: return template8.size();
+    case 9: return template9.size();
+    case 10: return template10.size();
+    case 11: return template11.size();
+    case 12: return template12.size();
+    case 13: return template13.size();
+    case 14: return template14.size();
+    case 15: return template15.size();
+    case 16: return template16.size();
     }
 
-    return nullptr;
+    return 0;
 }
 
 } // namespace nistpp

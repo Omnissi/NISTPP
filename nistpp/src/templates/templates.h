@@ -1,17 +1,18 @@
 #ifndef TEMPLATES_H
 #define TEMPLATES_H
 
+#include <cstddef>
 #include <nistpp/bits_storage.h>
-
-#include <map>
-#include <functional>
+#include <utility>
 
 namespace nistpp
 {
 
-using templ_func_t = std::function<bool(std::size_t, BitsStorage::bits_t::const_iterator, BitsStorage::bits_t::const_iterator)>;
+using iterator_t = const uint8_t*;
 
-templ_func_t GetTemplatesFunction(std::size_t m, std::size_t &numberOfRows);
+std::size_t GetNumberOfRows(std::size_t m);
+
+std::pair<iterator_t, iterator_t> GetTemplatesSequence(std::size_t i, std::size_t m);
 
 } // namespace nistpp
 

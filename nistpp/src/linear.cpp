@@ -1,5 +1,6 @@
 #include "nistpp/bits_storage.h"
 
+#include <cstddef>
 #include <nistpp/tests.h>
 
 #include <cmath>
@@ -48,10 +49,11 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
         std::size_t N_ = 0;
         while(N_ < M)
         {
-            d = static_cast<decltype(d)>(bits[i * M + N_]);
+            std::size_t constInd = i * M + N_;
+            d = static_cast<decltype(d)>(bits[constInd]);
             for(std::size_t j = 1; j <= static_cast<std::size_t>(L); ++j)
             {
-                if(bits[i * M + N_ - j] && C[j])
+                if(bits[constInd - j] && C[j])
                 {
                     ++d;
                 }
@@ -60,14 +62,22 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
             d %= 2;
             if(d)
             {
-                std::copy(C.begin(), C.end(), T.begin());
-                fill_zero(P);
+                // This solution is slow
+                //std::copy(C.begin(), C.end(), T.begin());
+                //fill_zero(P);
+                // This is faster
+                for(std::size_t j = 0; j < M; ++j)
+                {
+                    T[j] = C[j];
+                    P[j] = 0;
+                }
 
+                constInd = N_ - m;
                 for(std::size_t j = 0; j < M; ++j)
                 {
                     if(B[j] == 1)
                     {
-                        P[j + N_ - m] = 1;
+                        P[j + constInd] = 1;
                     }
                 }
 

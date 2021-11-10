@@ -127,12 +127,24 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M);
 /// sequence. The purpose of this test is to determine whether the number of occurrences of the 2m m-bit
 /// overlapping patterns is approximately the same as would be expected for a random sequence. Random
 /// sequences have uniformity; that is, every m-bit pattern has the same chance of appearing as every other
-/// m-bit pattern. Note that for m = 1, the Serial test is equivalent to the Frequency test
+/// m-bit pattern. Note that for m = 1, the Serial test is equivalent to the Frequency test.
 ///
 /// @param[in] data Class contained sequnce for test.
 /// @param[in] M    The length in bits of a block.
 /// @return @ref nistpp::return_t
 return_t SerialTest(const BitsStorage& data, std::size_t M);
+
+/// @brief Approximate Entropy Test.
+/// @details As with the Serial test, the focus of this test is the frequency of all possible overlapping
+/// m-bit patterns across the entire sequence. The purpose of the test is to compare the frequency of
+/// overlapping blocks of two consecutive/adjacent lengths (m and m+1) against the expected result for a
+/// random sequence.
+///
+/// @param[in] data Class contained sequnce for test.
+/// @param[in] M    The length of each block – in this case, the first block length used in the test. m+1 is the
+///                 second block length used.
+/// @return @ref nistpp::return_t
+return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M);
 
 } // namespace nistpp
 

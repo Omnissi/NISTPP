@@ -93,7 +93,7 @@ return_t FftTest(const BitsStorage &data)
             ++count;
         }
     }
-    double percentile = static_cast<double>(count)/(N/2.0)*100.0;
+
     double N_l = static_cast<double>(count);       /* number of peaks less than h = sqrt(3*n) */
     double N_o = static_cast<double>(0.95*N/2.0);
     double d   = (N_l - N_o)/std::sqrt(N/4.0*0.95*0.05);

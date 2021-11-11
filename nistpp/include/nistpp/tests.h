@@ -21,7 +21,7 @@ namespace nistpp
 /// is, the number of ones and zeroes in a sequence should be about the same. All subsequent tests depend on
 /// the passing of this test.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @return @ref nistpp::return_t
 return_t FrequencyTest(const BitsStorage& data);
 
@@ -30,7 +30,7 @@ return_t FrequencyTest(const BitsStorage& data);
 /// whether the frequency of ones in an M-bit block is approximately M/2, as would be expected under an
 /// assumption of randomness. For block size M=1, this test degenerates to test 1, the Frequency (Monobit) test.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @param[in] M    The length of each block.
 /// @return @ref nistpp::return_t
 /// @throw std::invalid_argument If M > number of bits.
@@ -43,7 +43,7 @@ return_t BlockFrequencyTest(const BitsStorage& data, std::size_t M);
 /// ones and zeros of various lengths is as expected for a random sequence. In particular, this test determines
 /// whether the oscillation between such zeros and ones is too fast or too slow.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @return @ref nistpp::return_t
 return_t RunsTest(const BitsStorage& data);
 
@@ -54,7 +54,7 @@ return_t RunsTest(const BitsStorage& data);
 /// the expected length of the longest run of ones implies that there is also an irregularity in the expected
 /// length of the longest run of zeroes. Therefore, only a test for ones is necessary.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @return @ref nistpp::return_t
 return_t LongestRunOfOnesTest(const BitsStorage& data);
 
@@ -63,7 +63,7 @@ return_t LongestRunOfOnesTest(const BitsStorage& data);
 /// to check for linear dependence among fixed length substrings of the original sequence. Note that this test
 /// also appears in the DIEHARD battery of tests.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @return @ref nistpp::return_t
 return_t RankTest(const BitsStorage& data);
 
@@ -73,7 +73,7 @@ return_t RankTest(const BitsStorage& data);
 /// sequence that would indicate a deviation from the assumption of randomness. The intention is to detect
 /// whether the number of peaks exceeding the 95 % threshold is significantly different than 5 %.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @return @ref nistpp::return_t
 return_t FftTest(const BitsStorage& data);
 
@@ -84,7 +84,7 @@ return_t FftTest(const BitsStorage& data);
 /// search for a specific m-bit pattern. If the pattern is not found, the window slides one bit position. If the
 /// pattern is found, the window is reset to the bit after the found pattern, and the search resumes.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @param[in] m    The length in bits of each template.
 /// @param[out] P   Array P-value for all rows in template.
 /// @return @ref nistpp::return_t
@@ -97,7 +97,7 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
 /// the window slides one bit position. The difference between this test and the test in Section 2.7 is that
 /// when the pattern is found, the window slides only one bit before resuming the search.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @param[in] m    The length in bits of each template.
 /// @return @ref nistpp::return_t
 return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m);
@@ -108,7 +108,7 @@ return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m);
 /// significantly compressed without loss of information. A significantly compressible sequence is
 /// considered to be non-random.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @return @ref nistpp::return_t
 return_t UniversalTest(const BitsStorage& data);
 
@@ -117,7 +117,7 @@ return_t UniversalTest(const BitsStorage& data);
 /// determine whether or not the sequence is complex enough to be considered random. Random sequences
 /// are characterized by longer LFSRs. An LFSR that is too short implies non-randomness.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @param[in] M    The length in bits of a block.
 /// @return @ref nistpp::return_t
 return_t LinearComplexityTest(const BitsStorage& data, std::size_t M);
@@ -129,7 +129,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M);
 /// sequences have uniformity; that is, every m-bit pattern has the same chance of appearing as every other
 /// m-bit pattern. Note that for m = 1, the Serial test is equivalent to the Frequency test.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @param[in] M    The length in bits of a block.
 /// @return @ref nistpp::return_t
 return_t SerialTest(const BitsStorage& data, std::size_t M);
@@ -140,11 +140,24 @@ return_t SerialTest(const BitsStorage& data, std::size_t M);
 /// overlapping blocks of two consecutive/adjacent lengths (m and m+1) against the expected result for a
 /// random sequence.
 ///
-/// @param[in] data Class contained sequnce for test.
+/// @param[in] data Class contained sequence for test.
 /// @param[in] M    The length of each block – in this case, the first block length used in the test. m+1 is the
 ///                 second block length used.
 /// @return @ref nistpp::return_t
 return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M);
+
+/// @brief Cumulative Sums (Cusum) Test.
+/// @details The focus of this test is the maximal excursion (from zero) of the random walk defined by the cumulative
+/// sum of adjusted (-1, +1) digits in the sequence. The purpose of the test is to determine whether the
+/// cumulative sum of the partial sequences occurring in the tested sequence is too large or too small relative
+/// to the expected behavior of that cumulative sum for random sequences. This cumulative sum may be
+/// considered as a random walk. For a random sequence, the excursions of the random walk should be near
+/// zero. For certain types of non-random sequences, the excursions of this random walk from zero will be
+/// large.
+///
+/// @param[in] data Class contained sequence for test.
+/// @return @ref nistpp::return_t
+return_t CumulativeSumsTest(const BitsStorage& data);
 
 } // namespace nistpp
 

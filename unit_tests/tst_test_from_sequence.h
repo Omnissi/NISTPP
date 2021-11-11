@@ -142,4 +142,11 @@ TEST_F(nistpp_sequence_test, Approximate)
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.982885));
 }
 
+TEST_F(nistpp_sequence_test, Cusum)
+{
+    auto res = nistpp::CumulativeSumsTest(*bitsStorage_);
+
+    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.451231));
+}
+
 #endif // TST_TEST_FROM_SEQUENCE_H

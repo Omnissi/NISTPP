@@ -6,7 +6,7 @@ class NistppConan(ConanFile):
     name = "NISTPP"
     license = "Unlicense"
     author = "Negodyaev Sergey (negodyaev.sergey@outlook.com)"
-    description = "NIST test oc C++"
+    description = "NIST test on C++"
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False], "enable_tests": [True, False]}
     default_options = {"shared": False, "fPIC": True, "enable_tests": True}

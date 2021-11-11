@@ -1,11 +1,8 @@
 #include <cstddef>
 #include <nistpp/tests.h>
 
-#include <sprout/math.hpp>
-
 #include <cmath>
 
-#include "help_function.h"
 #include "nistpp/types.h"
 #include "sprout/math/sqrt.hpp"
 #include "sprout/valarray/exponential.hpp"
@@ -17,11 +14,11 @@ constexpr double  threshold     = 0.01;
 
 return_t UniversalTest(const BitsStorage& data)
 {
-    constexpr double  expected_value[17] = {0, 0, 0, 0, 0, 0, 5.2177052, 6.1962507, 7.1836656,
+    constexpr std::array<double, 17> expected_value = {{0, 0, 0, 0, 0, 0, 5.2177052, 6.1962507, 7.1836656,
                                             8.1764248, 9.1723243, 10.170032, 11.168765,
-                                            12.168070, 13.167693, 14.167488, 15.167379 };
-    constexpr double  variance[17] = { 0, 0, 0, 0, 0, 0, 2.954, 3.125, 3.238, 3.311, 3.356, 3.384,
-                                       3.401, 3.410, 3.416, 3.419, 3.421 };
+                                            12.168070, 13.167693, 14.167488, 15.167379 }};
+    constexpr std::array<double, 17>  variance = {{ 0, 0, 0, 0, 0, 0, 2.954, 3.125, 3.238, 3.311, 3.356, 3.384,
+                                       3.401, 3.410, 3.416, 3.419, 3.421 }};
 
     std::size_t L = 5;
     const auto n = data.NumberOfBits();

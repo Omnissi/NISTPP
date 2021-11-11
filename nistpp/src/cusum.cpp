@@ -24,11 +24,11 @@ double normal(double x)
 
 return_t CumulativeSumsTest(const BitsStorage& data)
 {
-    int32_t S   = 0;
-    int32_t sup = 0;
-    int32_t inf = 0;
-    int32_t z;
-    int32_t zrev;
+    ssize_t S   = 0;
+    ssize_t sup = 0;
+    ssize_t inf = 0;
+    ssize_t z;
+    ssize_t zrev;
 
     const auto& bits = data.GetBits();
 
@@ -49,11 +49,11 @@ return_t CumulativeSumsTest(const BitsStorage& data)
         zrev = (sup - S > S - inf) ? sup - S : S - inf;
     }
 
-    const int32_t n     = static_cast<int32_t>(bits.size());
+    const ssize_t n     = static_cast<ssize_t>(bits.size());
     const double  sqrtn = std::sqrt(n);
 
-    int32_t begin = (-n / z + 1) / 4;
-    int32_t end   = (n / z - 1) / 4;
+    ssize_t begin = (-n / z + 1) / 4;
+    ssize_t end   = (n / z - 1) / 4;
 
     double sum1 = 0;
     for(auto k = begin; k <= end; ++k)

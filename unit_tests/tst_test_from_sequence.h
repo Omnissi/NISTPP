@@ -149,4 +149,10 @@ TEST_F(nistpp_sequence_test, Cusum)
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.451231));
 }
 
+TEST_F(nistpp_sequence_test, RandomExcursions)
+{
+    std::array<double, 8> P;
+    EXPECT_THROW(nistpp::RandomExcursionsTest(*bitsStorage_, P), std::runtime_error);
+}
+
 #endif // TST_TEST_FROM_SEQUENCE_H

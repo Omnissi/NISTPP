@@ -159,6 +159,21 @@ return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M);
 /// @return @ref nistpp::return_t
 return_t CumulativeSumsTest(const BitsStorage& data);
 
+/// @brief Random Excursions Test.
+/// @details The focus of this test is the number of cycles having exactly K visits in a cumulative sum random walk.
+/// The cumulative sum random walk is derived from partial sums after the (0,1) sequence is transferred to
+/// the appropriate (-1, +1) sequence. A cycle of a random walk consists of a sequence of steps of unit length
+/// taken at random that begin at and return to the origin. The purpose of this test is to determine if the
+/// number of visits to a particular state within a cycle deviates from what one would expect for a random
+/// sequence. This test is actually a series of eight tests (and conclusions), one test and conclusion for each of
+/// the states: -4, -3, -2, -1 and +1, +2, +3, +4.
+///
+/// @param[in]  data Class contained sequence for test.
+/// @param[out] P    P-value for 8 state [-4, -3, -2, -1, 1, 2, 3, 4].
+/// @return @ref nistpp::return_t
+/// @throw std::runtime_error Input data incorrect for this test.
+return_t RandomExcursionsTest(const BitsStorage& data, std::array<double, 8>& P);
+
 } // namespace nistpp
 
 #endif // TESTS_H

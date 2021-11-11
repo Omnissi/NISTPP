@@ -169,10 +169,21 @@ return_t CumulativeSumsTest(const BitsStorage& data);
 /// the states: -4, -3, -2, -1 and +1, +2, +3, +4.
 ///
 /// @param[in]  data Class contained sequence for test.
-/// @param[out] P    P-value for 8 state [-4, -3, -2, -1, 1, 2, 3, 4].
+/// @param[out] P    P-value for 8 state: [-4, -3, -2, -1, 1, 2, 3, 4].
 /// @return @ref nistpp::return_t
 /// @throw std::runtime_error Input data incorrect for this test.
-return_t RandomExcursionsTest(const BitsStorage& data, std::array<double, 8>& P);
+return_t RandomExcursionsTest(const BitsStorage& data, std::array<double, 8> &P);
+
+/// @brief Random Excursions Variant Test.
+/// @details The focus of this test is the total number of times that a particular state is visited (i.e., occurs) in a
+/// cumulative sum random walk. The purpose of this test is to detect deviations from the expected number
+/// of visits to various states in the random walk. This test is actually a series of eighteen tests (and
+/// conclusions), one test and conclusion for each of the states: -9, -8, …, -1 and +1, +2, …, +9.
+///
+/// @param[in]  data Class contained sequence for test.
+/// @param[out] P    P-value for 18 state: [-9, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9].
+/// @return @ref nistpp::return_t
+return_t RandomExcursionsVariantTest(const BitsStorage& data, std::array<double, 18>& P);
 
 } // namespace nistpp
 

@@ -8,8 +8,6 @@
 
 #include <boost/math/special_functions/gamma.hpp>
 
-#include <sprout/math.hpp>
-
 namespace nistpp
 {
 
@@ -33,9 +31,9 @@ return_t RandomExcursionsTest(const BitsStorage &data, std::array<double, 8>& P)
     std::size_t J = 0;
     S_k[0] = 2 * bits[0] - 1;
 
-    for(std::size_t i = 0; i < bits.size(); ++i)
+    for(std::size_t i = 1; i < bits.size(); ++i)
     {
-        S_k[i] = S_k[i - 1] + 2 * bits[i] - 1;
+        S_k[i] = S_k[i - 1] + 2 * static_cast<ssize_t>(bits[i]) - 1;
         if(S_k[i] == 0)
         {
             ++J;
@@ -94,13 +92,13 @@ return_t RandomExcursionsTest(const BitsStorage &data, std::array<double, 8>& P)
 
         for(std::size_t i = 0; i < counter.size(); ++i)
         {
-            const auto index = std::max(counter[i], static_cast<std::size_t>(5));
+            const auto index = std::min(counter[i], static_cast<std::size_t>(5));
             ++nu[index][i];
         }
     }
 
     double minP = std::numeric_limits<double>::max();
-    for(std::size_t i = 0; i < counter.size(); ++i)
+    for(std::size_t i = 0; i < stateX.size(); ++i)
     {
         const auto x   = stateX[i];
         double     sum = 0;

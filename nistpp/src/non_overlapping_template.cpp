@@ -2,25 +2,7 @@
 #include <nistpp/tests.h>
 #include <nistpp/math_helpers.h>
 
-#include <sprout/math.hpp>
-
 #include "templates/templates.h"
-
-#include "templates/template2.hpp"
-#include "templates/template3.hpp"
-#include "templates/template4.hpp"
-#include "templates/template5.hpp"
-#include "templates/template6.hpp"
-#include "templates/template7.hpp"
-#include "templates/template8.hpp"
-#include "templates/template9.hpp"
-#include "templates/template10.hpp"
-#include "templates/template11.hpp"
-#include "templates/template12.hpp"
-#include "templates/template13.hpp"
-#include "templates/template14.hpp"
-#include "templates/template15.hpp"
-//#include "templates/template16.hpp"
 
 #include <cmath>
 
@@ -45,18 +27,18 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
     const size_t M = numberOfBits/N;
 
 
-    const double lambda   = (M-m+1)/std::pow(2, m);
+    const double lambda   = static_cast<double>(M-m+1)/std::pow(2, m);
     const double varWj    = M*(1.0/std::pow(2.0, m) - (2.0*m-1.0)/std::pow(2.0, 2.0*m));
     const double sqrVarWj = std::pow(varWj, 0.5);
 
     auto        numberOfRows = GetNumberOfRows(m);
 
-    double minP         = std::numeric_limits<double>::max();
+    std::atomic<double> minP(std::numeric_limits<double>::max());
     const auto& bits    = data.GetBits();
     numberOfRows        = std::min(numberOfRows, maxNumOfTemplates);
     P.resize(numberOfRows);
 
-#pragma omp parallel for
+#pragma omp parallel for default(shared)
     for(std::size_t i = 0; i < numberOfRows; ++i)
     {
         std::vector<uint32_t> Wj(N);
@@ -90,10 +72,10 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
         }
 
         P[i] = boost::math::gamma_q(N/2.0, chi2/2.0);
-        minP = std::fmin(P[i], minP);
+        minP.store(std::fmin(P[i], minP.load()));
     }
 
-    return {minP >= threshold, minP};
+    return {minP.load() >= threshold, minP.load()};
 }
 
 } // namespace nistpp

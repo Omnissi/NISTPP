@@ -35,21 +35,21 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
     {
         for(std::size_t j = 0; j < M; ++j)
         {
-            T[j] = 0;
-            C[j] = 0;
-            P[j] = 0;
-            B[j] = 0;
+            T[j] = false;
+            C[j] = false;
+            P[j] = false;
+            B[j] = false;
         }
 //        fill_zero(T);
 //        fill_zero(C);
 //        fill_zero(P);
 //        fill_zero(B);
 
-        C[0] = 1;
-        B[0] = 1;
+        C[0] = true;
+        B[0] = true;
 
+        std::size_t d;
         int32_t     L = 0;
-        std::size_t d = 0;
         int32_t     m = -1;
 
         std::size_t N_ = 0;
@@ -75,7 +75,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
                 for(std::size_t j = 0; j < M; ++j)
                 {
                     T[j] = C[j];
-                    P[j] = 0;
+                    P[j] = false;
                 }
 
                 constInd = N_ - m;
@@ -83,7 +83,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
                 {
                     if(B[j] == 1)
                     {
-                        P[j + constInd] = 1;
+                        P[j + constInd] = true;
                     }
                 }
 

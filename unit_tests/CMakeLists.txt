@@ -9,7 +9,8 @@ find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 
 file(GLOB_RECURSE PROJ_TESTS
-   tst_test_from_sequence.h
+   tst_test_from_sequence_sha1.h
+   tst_test_from_sequence_sqrt3.h
    tst_math_helpers.h
    tst_frequency.h
    tst_block_frequency.h

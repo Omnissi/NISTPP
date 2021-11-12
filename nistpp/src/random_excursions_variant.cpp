@@ -36,7 +36,7 @@ return_t RandomExcursionsVariantTest(const BitsStorage& data, std::array<double,
         ++J;
     }
 
-    if(J < std::fmax(0.005 * std::pow(bits.size(), 0.5), 500.0))
+    if(static_cast<double>(J) < std::fmax(0.005 * std::pow(bits.size(), 0.5), 500.0))
     {
         throw std::runtime_error("WARNING:  TEST NOT APPLICABLE.  THERE ARE AN INSUFFICIENT NUMBER OF CYCLES.");
     }
@@ -47,7 +47,8 @@ return_t RandomExcursionsVariantTest(const BitsStorage& data, std::array<double,
         const auto x = stateX[i];
         const auto count = std::count(S_k.begin(), S_k.end(), x);
 
-        const auto arg = std::fabs(count - static_cast<decltype(count)>(J)) / (std::sqrt(2.0 * J * ( 4.0 * std::abs(x) - 2)));
+        const auto arg = static_cast<double>(std::fabs(count - static_cast<ssize_t>(J)))
+                / (std::sqrt(2.0 * static_cast<double>(J) * (4.0 * static_cast<double>(std::abs(x)) - 2)));
         P[i] = std::erfc(arg);
         minP = std::fmin(P[i], minP);
     }

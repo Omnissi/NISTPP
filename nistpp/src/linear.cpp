@@ -20,7 +20,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
 
     const std::size_t N     = std::floor(data.NumberOfBits() / M);
     const int8_t      sign  = ((M + 1) % 2) == 0 ? -1 : 1;
-    const double      mean  = M/2.0 + (9.0 + sign) / 36.0 - 1.0 / std::pow(2, M) * (M / 3.0 + 2.0/9.0);
+    const double      mean  = static_cast<double >(M)/2.0 + (9.0 + sign) / 36.0 - 1.0 / std::pow(2, M) * (static_cast<double >(M) / 3.0 + 2.0/9.0);
 
     std::vector<BitsStorage::bits_t::value_type> T(M);
     std::vector<BitsStorage::bits_t::value_type> C(M);
@@ -49,8 +49,8 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
         B[0] = true;
 
         std::size_t d;
-        int32_t     L = 0;
-        int32_t     m = -1;
+        ssize_t    L = 0;
+        ssize_t    m = -1;
 
         std::size_t N_ = 0;
         while(N_ < M)
@@ -78,7 +78,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
                     P[j] = false;
                 }
 
-                constInd = N_ - m;
+                constInd = N_ - static_cast<std::size_t>(m);
                 for(std::size_t j = 0; j < M; ++j)
                 {
                     if(B[j] == 1)
@@ -94,15 +94,15 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
 
                 if(L <= static_cast<decltype(L)>(N_ / 2))
                 {
-                    L = N_ + 1 - L;
-                    m = N_;
+                    L = static_cast<decltype(L)>(N_) + 1 - L;
+                    m = static_cast<decltype(m)>(N_);
                     std::copy(T.begin(), T.end(), B.begin());
                 }
             }
             ++N_;
         }
 
-        const double T_ = sign * (L - mean) + 2.0/9.0;
+        const double T_ = sign * (static_cast<double >(L) - mean) + 2.0/9.0;
 
         if (T_ <= -2.5)
             ++nu[0];
@@ -123,7 +123,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
     double chi2 = 0;
     for(std::size_t i = 0; i < K + 1; ++i)
     {
-        chi2 += std::pow(nu[i] - N * pi[i], 2) / (N * pi[i]);
+        chi2 += std::pow(nu[i] - static_cast<double >(N) * pi[i], 2) / (static_cast<double >(N) * pi[i]);
     }
 
     const double p_value = boost::math::gamma_q(K/2.0, chi2/2.0);

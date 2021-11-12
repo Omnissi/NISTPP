@@ -28,7 +28,7 @@ return_t RunsTest(const BitsStorage& data)
         }
     }
 
-    double erfc_arg = fabs(V - 2.0 * numberOfBits * pi * (1-pi)) / (2.0 * pi * (1-pi) * std::sqrt(2*numberOfBits));
+    double erfc_arg = fabs(static_cast<double>(V) - 2.0 * static_cast<double>(numberOfBits) * pi * (1-pi)) / (2.0 * pi * (1-pi) * std::sqrt(2*numberOfBits));
     double P        = std::erfc(erfc_arg);
 
     return {P >= threshold, P};

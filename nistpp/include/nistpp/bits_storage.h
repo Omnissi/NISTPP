@@ -37,14 +37,12 @@ public:
 
     const bits_t& GetBits() const;
 
-    bits_t& GetBits() { return bits_; }
-
     size_t NumberOfBits() const;
 
     size_t NumberOfOnes() const;
 
 private:
-    bits_t bits_;
+    bits_t bits_{};
     size_t ones_{0};
 };
 

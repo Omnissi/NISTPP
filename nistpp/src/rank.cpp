@@ -1,5 +1,4 @@
 #include <nistpp/tests.h>
-#include <nistpp/math_helpers.h>
 
 #include <sprout/math.hpp>
 
@@ -17,7 +16,7 @@ class BitsMatrix
 public:
     using rows_t    = std::bitset<Q>;
     using matrix_t  = std::array<rows_t, M>;
-    BitsMatrix(const BitsStorage& data, std::size_t k)
+    BitsMatrix(const BitsStorage::bits_t& data, std::size_t k)
     {
         const auto ind_k = k * (M*Q);
         for(size_t i = 0; i < M; ++i)
@@ -42,7 +41,7 @@ public:
     }
 
 private:
-    matrix_t matrix_;
+    matrix_t matrix_{};
 };
 
 template<std::size_t M, std::size_t Q>
@@ -66,11 +65,11 @@ template<std::size_t M, std::size_t Q>
 void perform_elementary_row_operations_backward(const std::size_t& i, BitsMatrix<M, Q>& matrix)
 {
     auto& bits_i = matrix[i];
-    for(int j = i-1; j >= 0; --j)
+    for(auto j = static_cast<ssize_t>(i-1); j >= 0; --j)
     {
-        if(matrix[j][i] == 1)
+        if(matrix[static_cast<size_t>(j)][i] == 1)
         {
-            auto& bits = matrix[j];
+            auto& bits = matrix[static_cast<size_t>(j)];
             for(std::size_t k = 0; k < Q; ++k)
             {
                 bits[k] = (bits[k] + bits_i[k]) % 2;
@@ -82,8 +81,6 @@ void perform_elementary_row_operations_backward(const std::size_t& i, BitsMatrix
 template<std::size_t M, std::size_t Q>
 std::size_t find_unit_element_and_swap_forward(const std::size_t& i, BitsMatrix<M, Q>& matrix)
 {
-    std::size_t row_op = 0;
-
     std::size_t index = i + 1;
     while((index < M) && (matrix[index][i] == 0))
     {
@@ -101,15 +98,15 @@ std::size_t find_unit_element_and_swap_forward(const std::size_t& i, BitsMatrix<
 template<std::size_t M, std::size_t Q>
 std::size_t find_unit_element_and_swap_backward(const std::size_t& i, BitsMatrix<M, Q>& matrix)
 {
-    int index = i-1;
-    while ((index >= 0) && (matrix[index][i] == 0))
+    ssize_t index = static_cast<ssize_t>(i-1);
+    while ((index >= 0) && (matrix[static_cast<size_t>(index)][i] == 0))
     {
         --index;
     }
 
     if ( index >= 0 )
     {
-        matrix.swap_rows(i, index);
+        matrix.swap_rows(i, static_cast<size_t>(index));
         return 1;
     }
 
@@ -147,7 +144,6 @@ std::size_t determine_rank(BitsMatrix<M, Q>& matrix)
 template<std::size_t M, std::size_t Q>
 std::size_t computeRank(BitsMatrix<M, Q>& matrix)
 {
-    std::size_t rank = 0;
     constexpr auto m  = std::min(M,Q);
 
     /* FORWARD APPLICATION OF ELEMENTARY ROW OPERATIONS */
@@ -182,22 +178,20 @@ std::size_t computeRank(BitsMatrix<M, Q>& matrix)
         }
     }
 
-    rank = determine_rank(matrix);
-
-    return rank;
+    return determine_rank(matrix);
 }
 
-constexpr double calcProduct(int32_t r)
+constexpr double calcProduct(ssize_t r)
 {
     double res = 1;
-    for(int32_t i = 0; i <= r-1; ++i)
+    for(ssize_t i = 0; i <= r-1; ++i)
     {
         res *= sprout::pow(1.0 - static_cast<double>(sprout::pow(2, i-32)), 2) / (1.0 - sprout::pow(2, i-r));
     }
     return res;
 }
 
-constexpr double pNumber(int32_t r)
+constexpr double pNumber(ssize_t r)
 {
     return sprout::pow(2, r*(32+32-r) - 32*32) * calcProduct(r);
 }
@@ -216,11 +210,13 @@ return_t RankTest(const BitsStorage &data)
 
     std::size_t N = numberOfBits / (32*32);
 
+    const auto& bits = data.GetBits();
+
     std::size_t F_32 = 0;
     std::size_t F_31 = 0;
     for(std::size_t k = 0; k < N; ++k)
     {
-        BitsMatrix<32, 32> matrix(data, k);
+        BitsMatrix<32, 32> matrix(bits, k);
         auto rank = computeRank(matrix);
 
         if(rank == 32)
@@ -236,9 +232,9 @@ return_t RankTest(const BitsStorage &data)
 
     std::size_t F_30 = N - (F_31 + F_32);
 
-    double chi_squared = std::pow(F_32 - N*p_32, 2.0)/(N*p_32) +
-                         std::pow(F_31 - N*p_31, 2.0)/(N*p_31) +
-                         std::pow(F_30 - N*p_30, 2.0)/(N*p_30);
+    double chi_squared = std::pow(static_cast<double>(F_32) - static_cast<double>(N)*p_32, 2.0)/(static_cast<double>(N)*p_32) +
+                         std::pow(static_cast<double>(F_31) - static_cast<double>(N)*p_31, 2.0)/(static_cast<double>(N)*p_31) +
+                         std::pow(static_cast<double>(F_30) - static_cast<double>(N)*p_30, 2.0)/(static_cast<double>(N)*p_30);
 
     double P = std::exp(-chi_squared/2.0);
 

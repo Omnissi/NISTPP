@@ -1,10 +1,5 @@
 #include <cstddef>
 #include <nistpp/tests.h>
-#include <nistpp/math_helpers.h>
-
-#include <sprout/math.hpp>
-
-#include "templates/templates.h"
 
 #include <cmath>
 
@@ -25,7 +20,7 @@ double computePi(std::size_t u, double eta)
     double sum = 0.0;
     for(std::size_t l = 1; l<=u; ++l)
     {
-        sum += exp(-eta - u * std::log(2) + l * std::log(eta) - std::lgamma(l + 1)
+        sum += exp(-eta - static_cast<double>(u) * std::log(2) + static_cast<double>(l) * std::log(eta) - std::lgamma(l + 1)
                    + std::lgamma(u) - std::lgamma(l) - std::lgamma(u - l + 1));
     }
 
@@ -40,7 +35,7 @@ return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m)
 
     std::array<double, 6> pi = {};
     {
-        double lambda = (M - m + 1) / std::pow(2, m);
+        double lambda = (static_cast<double>(M - m + 1)) / std::pow(2, m);
         double eta    = lambda / 2.0;
         double sum    = 0.0;
 
@@ -69,7 +64,7 @@ return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m)
             }
         }
 
-        it_eps += m - 1;
+        it_eps += static_cast<long>(m - 1);
         W_obs   = std::min(W_obs, nu.size() - 1);
         ++nu[W_obs];
     }
@@ -77,7 +72,7 @@ return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m)
     double chi2 = 0.0;
     for(std::size_t i = 0; i < K+1; ++i)
     {
-        chi2 += pow(static_cast<double>(nu[i]) - static_cast<double>(N*pi[i]), 2)/(static_cast<double>(N*pi[i]));
+        chi2 += pow(static_cast<double>(nu[i]) - static_cast<double>(N)*pi[i], 2)/(static_cast<double>(N)*pi[i]);
     }
 
     double p_value = boost::math::gamma_q(K/2.0, chi2/2.0);

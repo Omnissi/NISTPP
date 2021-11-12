@@ -14,14 +14,14 @@ namespace nistpp
 
 constexpr double  threshold     = 0.01;
 
-double psi2(const BitsStorage::bits_t bits, std::size_t m)
+double psi2(const BitsStorage::bits_t& bits, std::size_t m)
 {
     if(m == 0)
     {
         return 0.0;
     }
 
-    const std::size_t powLen = std::pow(2, m+1) - 1;
+    const std::size_t powLen = static_cast<std::size_t>(std::pow(2, m+1)) - 1;
     std::vector<std::size_t> P(powLen, 0);
 
     const auto n = bits.size();
@@ -44,7 +44,7 @@ double psi2(const BitsStorage::bits_t bits, std::size_t m)
     }
 
     double sum = 0;
-    for(std::size_t i = std::pow(2, m) - 1; i < powLen; ++i)
+    for(std::size_t i = static_cast<std::size_t>(std::pow(2, m)) - 1; i < powLen; ++i)
     {
         sum += std::pow(P[i], 2);
     }

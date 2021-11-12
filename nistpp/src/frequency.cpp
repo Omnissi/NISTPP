@@ -15,7 +15,7 @@ return_t FrequencyTest(const BitsStorage &data)
     const auto numberOfBits = data.NumberOfBits();
     const auto ones         = data.NumberOfOnes();
 
-    int32_t Sn = static_cast<int32_t>(2 * ones - (numberOfBits));
+    ssize_t Sn = static_cast<ssize_t>(2 * ones - (numberOfBits));
     double Sobs = static_cast<double>(std::abs(Sn)) / std::sqrt(numberOfBits);
     double P    = std::erfc(Sobs/sprout::sqrt(2.0));
 

@@ -15,7 +15,7 @@
 class nistpp_sequence_test_sqrt3 : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         boost::filesystem::path path(std::string(FILE_PREFIX) + std::string("/data.sqrt3"));
         if(!boost::filesystem::exists(path))
@@ -44,15 +44,15 @@ protected:
         bitsStorage_ = std::make_shared<nistpp::BitsStorage>(data);
     }
 
-    void TearDown()
+    void TearDown() override
     {}
 
-    bool EqualWithNistPValue(const double& val, const double& PNist)
+    static bool EqualWithNistPValue(const double& val, const double& PNist)
     {
         return std::fabs(val - PNist) < 1e-6;
     }
 
-    std::shared_ptr<nistpp::BitsStorage>    bitsStorage_;
+    std::shared_ptr<nistpp::BitsStorage>    bitsStorage_{};
 };
 
 TEST_F(nistpp_sequence_test_sqrt3, frequency)
@@ -149,7 +149,7 @@ TEST_F(nistpp_sequence_test_sqrt3, Cusum)
 
 TEST_F(nistpp_sequence_test_sqrt3, RandomExcursions)
 {
-    std::array<double, 8> P;
+    std::array<double, 8> P{};
     nistpp::RandomExcursionsTest(*bitsStorage_, P);
 
     EXPECT_TRUE(EqualWithNistPValue(P[4], 0.783283));
@@ -157,7 +157,7 @@ TEST_F(nistpp_sequence_test_sqrt3, RandomExcursions)
 
 TEST_F(nistpp_sequence_test_sqrt3, RandomExcursionsVariant)
 {
-    std::array<double, 18> P;
+    std::array<double, 18> P{};
     nistpp::RandomExcursionsVariantTest(*bitsStorage_, P);
 
     EXPECT_TRUE(EqualWithNistPValue(P[8], 0.155066));

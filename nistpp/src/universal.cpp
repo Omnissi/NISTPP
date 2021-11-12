@@ -34,9 +34,9 @@ return_t UniversalTest(const BitsStorage& data)
     if ( n >= 496435200 )  L = 15;
     if ( n >= 1059061760 ) L = 16;
 
-    const std::size_t Q = 10 * std::pow(2, L);
+    const std::size_t Q = 10 * static_cast<std::size_t>(std::pow(2, L));
     const std::size_t K = static_cast<std::size_t>(std::floor(n/L)) - Q;
-    const std::size_t p = std::pow(2, L);
+    const std::size_t p = static_cast<std::size_t>(std::pow(2, L));
 
     std::vector<std::size_t> T(p);
 
@@ -52,7 +52,7 @@ return_t UniversalTest(const BitsStorage& data)
         {
             if(bits[(i - 1) * L + j])
             {
-                decRep += std::pow(2, L - 1 - j);
+                decRep += static_cast<std::size_t>(std::pow(2, L - 1 - j));
             }
         }
 
@@ -67,7 +67,7 @@ return_t UniversalTest(const BitsStorage& data)
         {
             if(bits[(i - 1) * L + j])
             {
-                decRep += std::pow(2, L - 1 - j);
+                decRep += static_cast<std::size_t>(std::pow(2, L - 1 - j));
             }
         }
         sum += std::log(i - T[decRep]) / sprout::log(2);

@@ -28,7 +28,7 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
 
 
     const double lambda   = static_cast<double>(M-m+1)/std::pow(2, m);
-    const double varWj    = M*(1.0/std::pow(2.0, m) - (2.0*m-1.0)/std::pow(2.0, 2.0*m));
+    const double varWj    = static_cast<double>(M)*(1.0/std::pow(2.0, m) - (2.0*static_cast<double>(m)-1.0)/std::pow(2.0, 2.0*static_cast<double >(m)));
     const double sqrVarWj = std::pow(varWj, 0.5);
 
     auto        numberOfRows = GetNumberOfRows(m);
@@ -41,7 +41,7 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
 #pragma omp parallel for default(shared)
     for(std::size_t i = 0; i < numberOfRows; ++i)
     {
-        std::vector<uint32_t> Wj(N);
+        std::vector<std::size_t> Wj(N);
         auto begin  = bits.begin();
         auto end    = begin + m;
 

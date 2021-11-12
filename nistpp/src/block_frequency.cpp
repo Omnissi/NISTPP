@@ -35,8 +35,8 @@ return_t BlockFrequencyTest(const BitsStorage &data, std::size_t M)
         sum += std::pow(v, 2);
     }
 
-    double chi_squared = 4.0 * M * sum;
-    double P           = boost::math::gamma_q(numberOfBlocks/2.0, chi_squared/2.0);
+    double chi_squared = 4.0 * static_cast<double>(M) * sum;
+    double P           = boost::math::gamma_q(static_cast<double>(numberOfBlocks) / 2.0, chi_squared / 2.0);
 
     return {P >= threshold, P};
 }

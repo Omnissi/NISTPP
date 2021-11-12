@@ -55,7 +55,7 @@ return_t RandomExcursionsTest(const BitsStorage &data, std::array<double, 8>& P)
 
     cycle[J] = bits.size();
 
-    if(J < std::fmax(0.005 * std::pow(bits.size(), 0.5), 500.0))
+    if(static_cast<double>(J) < std::fmax(0.005 * std::pow(bits.size(), 0.5), 500.0))
     {
         throw std::runtime_error("WARNING:  TEST NOT APPLICABLE.  THERE ARE AN INSUFFICIENT NUMBER OF CYCLES.");
     }
@@ -75,11 +75,11 @@ return_t RandomExcursionsTest(const BitsStorage &data, std::array<double, 8>& P)
             {
                 if(S_k[i] < 0)
                 {
-                    ++counter[S_k[i] + 4];
+                    ++counter[static_cast<std::size_t>(S_k[i] + 4)];
                 }
                 else
                 {
-                    ++counter[S_k[i] + 3];
+                    ++counter[static_cast<std::size_t>(S_k[i] + 3)];
                 }
             }
         }
@@ -104,8 +104,8 @@ return_t RandomExcursionsTest(const BitsStorage &data, std::array<double, 8>& P)
         double     sum = 0;
         for(std::size_t j = 0; j < nu.size(); ++j)
         {
-            const auto tmp = J * pi[std::abs(x)][j];
-            sum += std::pow(nu[j][i] - tmp, 2) / tmp;
+            const auto tmp = static_cast<double>(J) * pi[static_cast<std::size_t>(std::abs(x))][j];
+            sum += std::pow(static_cast<double>(nu[j][i]) - tmp, 2) / tmp;
         }
 
         P[i] = boost::math::gamma_q(2.5, sum / 2.0);

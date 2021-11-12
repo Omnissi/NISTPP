@@ -31,7 +31,7 @@ return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M)
             continue;
         }
 
-        const std::size_t powLen = std::pow(2, blockSize + 1) - 1;
+        const std::size_t powLen = static_cast<std::size_t>(std::pow(2, blockSize + 1)) - 1;
         std::vector<std::size_t> P(powLen);
 
         for(std::size_t i = 0; i < bits.size(); ++i)
@@ -49,23 +49,23 @@ return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M)
         }
 
         double sum = 0;
-        const std::size_t powConst = std::pow(2, blockSize);
-        std::size_t index = std::pow(2, blockSize) - 1;
+        const std::size_t powConst = static_cast<std::size_t>(std::pow(2, blockSize));
+        std::size_t index =  powConst - 1;
         for(std::size_t i = 0; i < powConst; ++i, ++index)
         {
             if(P[index] > 0)
             {
-                sum += P[index] * std::log(static_cast<double>(P[index])/bits.size());
+                sum += static_cast<double>(P[index]) * std::log(static_cast<double>(P[index]) / static_cast<double>(bits.size()));
             }
         }
 
-        sum /= bits.size();
+        sum /= static_cast<double>(bits.size());
         ApEn[r] = sum;
         ++r;
     }
 
     const auto apen    = ApEn[0] - ApEn[1];
-    const auto chi2    = 2.0 * bits.size() * (sprout::log(2) - apen);
+    const auto chi2    = 2.0 * static_cast<double>(bits.size()) * (sprout::log(2) - apen);
     const auto p_value = boost::math::gamma_q(std::pow(2, M-1), chi2/2.0);
 
     return {p_value >= threshold, p_value};

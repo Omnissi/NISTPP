@@ -109,7 +109,7 @@ return_t LongestRunOfOnesTest(const BitsStorage& data)
     double chi2 = 0.0;
     for (size_t i = 0; i <= K; ++i )
     {
-        chi2 += std::pow(nu[i] - numberOfBlock * pi[i], 2) / (numberOfBlock * pi[i]);
+        chi2 += std::pow(static_cast<double>(nu[i]) - static_cast<double>(numberOfBlock) * pi[i], 2) / (static_cast<double>(numberOfBlock) * pi[i]);
     }
 
     double P = boost::math::gamma_q((static_cast<double>(K)/2.0), chi2/2.0);

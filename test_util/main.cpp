@@ -17,7 +17,6 @@ public:
      */
     void start()
     {
-        m_started = true;
         m_begin = std::chrono::high_resolution_clock::now();
     }
 
@@ -46,8 +45,7 @@ public:
     }
 
 private:
-    bool m_started = false;
-    std::chrono::high_resolution_clock::time_point m_begin;
+    std::chrono::high_resolution_clock::time_point m_begin{};
 };
 
 int main(int argc, char* argv[])
@@ -73,8 +71,8 @@ int main(int argc, char* argv[])
 
     auto fileSize = boost::filesystem::file_size(path);
 
-    size_t blockSize = atoi(argv[3]);
-    std::vector<uint8_t> tmp(atoi(argv[2]) / 8);
+    const size_t blockSize = static_cast<std::size_t>(atoi(argv[3]));
+    std::vector<uint8_t> tmp(static_cast<std::size_t>(atoi(argv[2]) / 8));
 
     if(blockSize * tmp.size() > fileSize)
     {
@@ -92,13 +90,13 @@ int main(int argc, char* argv[])
         t.start();
         while(size < tmp.size())
         {
-            auto err = stream.readsome(reinterpret_cast<char*>(tmp.data()) + size, tmp.size() - size);
+            auto err = stream.readsome(reinterpret_cast<char*>(tmp.data()) + size, static_cast<ssize_t>(tmp.size() - size));
             if(err < 0)
             {
                 std::cerr << "Error read sequence" << std::endl;
             }
 
-            size += err;
+            size += static_cast<std::size_t>(err);
         }
         std::cout << "Complete read file: " << t.restart() << std::endl;
 
@@ -108,20 +106,44 @@ int main(int argc, char* argv[])
 
         std::vector<std::pair<std::string, std::function<nistpp::return_t()>>> tests =
         {
-                //    {"freq",        [&](){ return nistpp::FrequencyTest(bitsStorage); }},
-                //    {"BlkFreq",     [&](){ return nistpp::BlockFrequencyTest(bitsStorage, 128); }},
-                //    {"Runs",        [&](){ return nistpp::RunsTest(bitsStorage); }},
-                //    {"LongRuns",    [&](){ return nistpp::LongestRunOfOnesTest(bitsStorage); }},
-                //    {"Runk",        [&](){ return nistpp::RankTest(bitsStorage); }},
-                //    {"FFT",         [&](){ return nistpp::FftTest(bitsStorage); }},
-        {"NonOverlap",  [&](){
-            std::vector<double> P;
-            auto res = nistpp::NonOverlappingTemplateTest(bitsStorage, 9, P);
-            for(auto& el : P)
-            {
-                std::cout << "    " << el << std::endl;
-            }
-            return res; }},
+                    {"freq",        [&](){ return nistpp::FrequencyTest(bitsStorage); }},
+                    {"BlkFreq",     [&](){ return nistpp::BlockFrequencyTest(bitsStorage, 128); }},
+                    {"Runs",        [&](){ return nistpp::RunsTest(bitsStorage); }},
+                    {"LongRuns",    [&](){ return nistpp::LongestRunOfOnesTest(bitsStorage); }},
+                    {"Runk",        [&](){ return nistpp::RankTest(bitsStorage); }},
+                    {"FFT",         [&](){ return nistpp::FftTest(bitsStorage); }},
+                    {"NonOverlap",  [&](){
+                        std::vector<double> P;
+                        auto res = nistpp::NonOverlappingTemplateTest(bitsStorage, 9, P);
+                        for(auto& el : P)
+                        {
+                            std::cout << "    " << el << std::endl;
+                        }
+                        return res; }},
+                    {"Overlap",     [&](){ return nistpp::OverlappingTemplateTest(bitsStorage, 9); }},
+                    {"Universal",   [&](){ return nistpp::UniversalTest(bitsStorage); }},
+                    {"Linear",      [&](){ return nistpp::LinearComplexityTest(bitsStorage, 500); }},
+                    {"Serial",      [&](){ return nistpp::SerialTest(bitsStorage, 16); }},
+                    {"Approximate", [&](){ return nistpp::ApproximateEntropyTest(bitsStorage, 10); }},
+                    {"Cusum",       [&](){ return nistpp::CumulativeSumsTest(bitsStorage); }},
+                    {"Rand",        [&](){
+                        std::array<double, 8> P{};
+                        auto res = nistpp::RandomExcursionsTest(bitsStorage, P);
+                        for(auto& el : P)
+                        {
+                            std::cout << "    " << el << std::endl;
+                        }
+                        return res;
+                    }},
+                    {"RandVar",     [&](){
+                        std::array<double, 18> P{};
+                        auto res = nistpp::RandomExcursionsVariantTest(bitsStorage, P);
+                        for(auto& el : P)
+                        {
+                            std::cout << "    " << el << std::endl;
+                        }
+                        return res;
+                    }},
     };
 
         std::cout << "Start testing..." << std::endl;

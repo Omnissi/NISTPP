@@ -4,7 +4,6 @@
 #include <nistpp/tests.h>
 
 #include <cmath>
-#include <vector>
 
 #include <boost/math/distributions.hpp>
 
@@ -58,15 +57,15 @@ return_t CumulativeSumsTest(const BitsStorage& data)
     double sum1 = 0;
     for(auto k = begin; k <= end; ++k)
     {
-        sum1 += normal(((4 * k + 1) * z) / sqrtn);
-        sum1 -= normal(((4 * k - 1) * z) / sqrtn);
+        sum1 += normal((static_cast<double>((4 * k + 1) * z)) / sqrtn);
+        sum1 -= normal((static_cast<double>((4 * k - 1) * z)) / sqrtn);
     }
 
     double sum2 = 0;
     for(auto k = (-n / z - 3) / 4; k <= end; ++k)
     {
-        sum2 += normal(((4 * k + 3) * z) / sqrtn);
-        sum2 -= normal(((4 * k + 1) * z) / sqrtn);
+        sum2 += normal((static_cast<double>((4 * k + 3) * z)) / sqrtn);
+        sum2 -= normal((static_cast<double>((4 * k + 1) * z)) / sqrtn);
     }
 
     const double p_value_f = 1.0 - sum1 + sum2;
@@ -77,15 +76,15 @@ return_t CumulativeSumsTest(const BitsStorage& data)
     sum1 = 0;
     for(auto k = begin; k <= end; ++k)
     {
-        sum1 += normal(((4 * k + 1) * zrev) / sqrtn);
-        sum1 -= normal(((4 * k - 1) * zrev) / sqrtn);
+        sum1 += normal((static_cast<double>((4 * k + 1) * zrev)) / sqrtn);
+        sum1 -= normal((static_cast<double>((4 * k - 1) * zrev)) / sqrtn);
     }
 
     sum2 = 0;
     for(auto k = (-n / zrev - 3) / 4; k <= end; ++k)
     {
-        sum2 += normal(((4 * k + 3) * zrev) / sqrtn);
-        sum2 -= normal(((4 * k + 1) * zrev) / sqrtn);
+        sum2 += normal((static_cast<double>((4 * k + 3) * zrev)) / sqrtn);
+        sum2 -= normal((static_cast<double>((4 * k + 1) * zrev)) / sqrtn);
     }
 
     const double p_value_b = 1.0 - sum1 + sum2;

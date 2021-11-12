@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     res_t.start();
     for(size_t i = 0; i < blockSize; ++i)
     {
-        std::cout << "Reading file..." << std::endl;
+//        std::cout << "Reading file..." << std::endl;
         std::size_t size = 0;
         class time t;
         t.start();
@@ -98,11 +98,11 @@ int main(int argc, char* argv[])
 
             size += static_cast<std::size_t>(err);
         }
-        std::cout << "Complete read file: " << t.restart() << std::endl;
+//        std::cout << "Complete read file: " << t.restart() << std::endl;
 
-        std::cout << "Start parsing..." << std::endl;
+//        std::cout << "Start parsing..." << std::endl;
         nistpp::BitsStorage bitsStorage(tmp);
-        std::cout << "Complete parsing: " << t.restart() << std::endl;
+//        std::cout << "Complete parsing: " << t.restart() << std::endl;
 
         std::vector<std::pair<std::string, std::function<nistpp::return_t()>>> tests =
         {
@@ -115,10 +115,10 @@ int main(int argc, char* argv[])
                     {"NonOverlap",  [&](){
                         std::vector<double> P;
                         auto res = nistpp::NonOverlappingTemplateTest(bitsStorage, 9, P);
-                        for(auto& el : P)
-                        {
-                            std::cout << "    " << el << std::endl;
-                        }
+//                        for(auto& el : P)
+//                        {
+//                            std::cout << "    " << el << std::endl;
+//                        }
                         return res; }},
                     {"Overlap",     [&](){ return nistpp::OverlappingTemplateTest(bitsStorage, 9); }},
                     {"Universal",   [&](){ return nistpp::UniversalTest(bitsStorage); }},
@@ -128,36 +128,51 @@ int main(int argc, char* argv[])
                     {"Cusum",       [&](){ return nistpp::CumulativeSumsTest(bitsStorage); }},
                     {"Rand",        [&](){
                         std::array<double, 8> P{};
-                        auto res = nistpp::RandomExcursionsTest(bitsStorage, P);
-                        for(auto& el : P)
+                        nistpp::return_t res;
+                        try
                         {
-                            std::cout << "    " << el << std::endl;
+                            res = nistpp::RandomExcursionsTest(bitsStorage, P);
                         }
+                        catch(const std::exception& ex)
+                        {
+                            std::cerr << "Rand failed: " << ex.what() << std::endl;
+                            std::fill(P.begin(), P.end(), 0);
+                        }
+
+//                        for(auto& el : P)
+//                        {
+//                            std::cout << "    " << el << std::endl;
+//                        }
                         return res;
                     }},
                     {"RandVar",     [&](){
                         std::array<double, 18> P{};
-                        auto res = nistpp::RandomExcursionsVariantTest(bitsStorage, P);
-                        for(auto& el : P)
+                        nistpp::return_t res;
+                        try
                         {
-                            std::cout << "    " << el << std::endl;
+                            res = nistpp::RandomExcursionsVariantTest(bitsStorage, P);
                         }
+                        catch(const std::exception& ex)
+                        {
+                            std::cerr << "RandVar failed: " << ex.what() << std::endl;
+                            std::fill(P.begin(), P.end(), 0);
+                        }
+//                        for(auto& el : P)
+//                        {
+//                            std::cout << "    " << el << std::endl;
+//                        }
                         return res;
                     }},
     };
 
-        std::cout << "Start testing..." << std::endl;
         t.restart();
+#pragma omp parallel for
         for(auto& el : tests)
         {
-            class time test;
-            test.start();
-            std::cout << "Start test: " << el.first << std::endl;
             el.second();
-            std::cout << "Test: " << el.first << " finished! Time: " << test.elapsed() << std::endl;
         }
 
-        std::cout << "Complete iteration: " << i << std::endl;
+        std::cout << "Complete iteration: " << i << ". Time: " << t.restart() << std::endl;
     }
     std::cout << "Testing complete! Result time: " << res_t.elapsed() << std::endl;
 

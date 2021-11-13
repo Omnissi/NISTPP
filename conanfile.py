@@ -3,15 +3,18 @@ import version
 import os
 
 class NistppConan(ConanFile):
-    name = "NISTPP"
+    name = "nistpp"
     license = "Unlicense"
     author = "Negodyaev Sergey (negodyaev.sergey@outlook.com)"
     description = "NIST test on C++"
+    url = "https://git.omnissi-factory.ru/Omnissi/NISTPP"
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False], "enable_tests": [True, False]}
     default_options = {"shared": False, "fPIC": True, "enable_tests": True}
     generators = ["cmake", "cmake_find_package", "cmake_paths"]
-    exports = ["CMakeLists.txt", "version.py" "cmake/*"]
+
+    exports = ["CMakeLists.txt", "version.py"]
+    _cmake = None
 
     def requirements(self):
         self.requires.add("boost/1.73.0")
@@ -23,19 +26,24 @@ class NistppConan(ConanFile):
         self.options["kissfft"].openmp = True
         self.options["kissfft"].datatype = "double"
 
+    def _configure_cmake(self):
+        if self._cmake:
+            return self._cmake
+        cmake = CMake(self)
+        cmake.configure()
+        self._cmake = cmake
+        return self._cmake
+
     def set_version(self):
         self.version = version.get_version(os.path.dirname(os.path.abspath(__file__)))
 
     def build(self):
-        cmake = CMake(self)
-        cmake.configure()
+        cmake = self._configure_cmake()
         cmake.build()
 
     def package(self):
-        self.copy("*.h", dst="include", keep_path=False)
-        self.copy("*.hpp", dst="include", keep_path=False)
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.dll", dst="bin", keep_path=False)
-        self.copy("*.so", dst="lib", keep_path=False)
-        self.copy("*.dylib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        cmake = self._configure_cmake()
+        cmake.install()
+
+    def package_info(self):
+        self.cpp_info.build_modules = [ "cmake/nistpp.cmake" ]

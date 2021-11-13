@@ -22,3 +22,5 @@ add_subdirectory(nistpp)
 enable_testing()
 add_subdirectory(unit_tests)
 
+install(DIRECTORY nistpp/include/nistpp DESTINATION include)
+install(TARGETS nistpp LIBRARY DESTINATION lib)

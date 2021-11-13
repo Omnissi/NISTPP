@@ -20,10 +20,11 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
     const int8_t      sign  = ((M + 1) % 2) == 0 ? -1 : 1;
     const double      mean  = static_cast<double >(M)/2.0 + (9.0 + sign) / 36.0 - 1.0 / std::pow(2, M) * (static_cast<double >(M) / 3.0 + 2.0/9.0);
 
-    std::array<double, 7> nu = {};
+    std::array<std::atomic_uint32_t, 7> nu = {};
 
     const auto& bits = data.GetBits();
 
+#pragma omp parallel for
     for(std::size_t i = 0; i < N; ++i)
     {
         std::vector<BitsStorage::bits_t::value_type> T(M);

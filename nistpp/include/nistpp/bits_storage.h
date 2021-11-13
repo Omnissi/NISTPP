@@ -14,7 +14,7 @@ namespace nistpp
 class BitsStorage
 {
 public:
-    static constexpr size_t numberOfBitsInWord = 8;
+    static constexpr std::size_t numberOfBitsInWord = 8;
     using word_t = std::bitset<numberOfBitsInWord>;
     using bits_t = std::vector<bool>;
 
@@ -33,17 +33,26 @@ public:
     /// @warning 1 byte of input sequence = 1 bit data
     void SetSequenceByteBit(const sequence_t& data);
 
-    uint8_t operator[](size_t index) const;
+    /// @brief Get bit from index.
+    /// @param[in] index Index of bit.
+    /// @return Bit.
+    bool operator[](std::size_t index) const;
 
+    /// @brief Get raw sequence, where 1 byte = 1 bit.
+    /// @return Raw sequence.
     const bits_t& GetBits() const;
 
-    size_t NumberOfBits() const;
+    /// @brief Get number of bit in sequence.
+    /// @return Number of bit in sequence.
+    std::size_t NumberOfBits() const;
 
-    size_t NumberOfOnes() const;
+    /// @brief Get number of 1-s in sequence.
+    /// @return Number of 1-s in sequence.
+    std::size_t NumberOfOnes() const;
 
 private:
     bits_t bits_{};
-    size_t ones_{0};
+    std::size_t ones_{};
 };
 
 } // namespace nistpp

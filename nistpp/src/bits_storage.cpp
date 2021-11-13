@@ -1,6 +1,6 @@
 #include <nistpp/bits_storage.h>
 
-#include <numeric>
+#include <algorithm>
 
 namespace nistpp
 {
@@ -13,37 +13,25 @@ BitsStorage::BitsStorage(const sequence_t &data)
     {
         word_t tmp(el);
         ones_ += tmp.count();
-        for(int32_t i = numberOfBitsInWord - 1; i >= 0; --i)
+        for(ssize_t i = numberOfBitsInWord - 1; i >= 0; --i)
         {
-            bits_.emplace_back(tmp[i]);
+            bits_.emplace_back(tmp[static_cast<size_t>(i)]);
         }
     }
 }
 
 void BitsStorage::SetSequenceByteBit(const sequence_t &data)
 {
-    //TODO: refactor
-
-    std::string tmp(data.begin(), data.end());
-
     bits_.clear();
-    bits_.reserve(tmp.size());
-    for(auto it = tmp.begin(); it < tmp.end(); tmp += numberOfBitsInWord)
-    {
-        word_t tmp(std::string(it, it + numberOfBitsInWord));
-        ones_ += tmp.count();
-        for(int32_t i = numberOfBitsInWord - 1; i >= 0; --i)
-        {
-            bits_.emplace_back(tmp[i]);
-        }
-    }
+    bits_.reserve(data.size());
+
+    std::copy(data.begin(), data.end(), bits_.begin());
+
+    ones_ = static_cast<size_t>(std::count(bits_.begin(), bits_.end(), true));
 }
 
-uint8_t BitsStorage::operator[](size_t index) const
+bool BitsStorage::operator[](std::size_t index) const
 {
-//    auto div = std::div(index, static_cast<int32_t>(numberOfBitsInWord));
-
-//    return bits_[div.quot][numberOfBitsInWord - 1 - div.rem];
     return bits_[index];
 }
 

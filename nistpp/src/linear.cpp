@@ -16,14 +16,9 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
     constexpr std::size_t K     = 6;
     constexpr double      pi[7] = {0.01047, 0.03125, 0.12500, 0.50000, 0.25000, 0.06250, 0.020833};
 
-    const std::size_t N     = std::floor(data.NumberOfBits() / M);
+    const auto        N     = static_cast<size_t>(std::floor(data.NumberOfBits() / M));
     const int8_t      sign  = ((M + 1) % 2) == 0 ? -1 : 1;
     const double      mean  = static_cast<double >(M)/2.0 + (9.0 + sign) / 36.0 - 1.0 / std::pow(2, M) * (static_cast<double >(M) / 3.0 + 2.0/9.0);
-
-    std::vector<BitsStorage::bits_t::value_type> T(M);
-    std::vector<BitsStorage::bits_t::value_type> C(M);
-    std::vector<BitsStorage::bits_t::value_type> P(M);
-    std::vector<BitsStorage::bits_t::value_type> B(M);
 
     std::array<double, 7> nu = {};
 
@@ -31,24 +26,16 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
 
     for(std::size_t i = 0; i < N; ++i)
     {
-        for(std::size_t j = 0; j < M; ++j)
-        {
-            T[j] = false;
-            C[j] = false;
-            P[j] = false;
-            B[j] = false;
-        }
-//        fill_zero(T);
-//        fill_zero(C);
-//        fill_zero(P);
-//        fill_zero(B);
+        std::vector<BitsStorage::bits_t::value_type> T(M);
+        std::vector<BitsStorage::bits_t::value_type> C(M);
+        std::vector<BitsStorage::bits_t::value_type> B(M);
 
         C[0] = true;
         B[0] = true;
 
         std::size_t d;
-        ssize_t    L = 0;
-        ssize_t    m = -1;
+        ssize_t     L = 0;
+        ssize_t     m = -1;
 
         std::size_t N_ = 0;
         while(N_ < M)
@@ -66,28 +53,13 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
             d %= 2;
             if(d)
             {
-                // This solution is slow
-                //std::copy(C.begin(), C.end(), T.begin());
-                //std::fill(P.begin(), P.end(), 0);
-                // This is faster
-                for(std::size_t j = 0; j < M; ++j)
-                {
-                    T[j] = C[j];
-                    P[j] = false;
-                }
+                std::copy(C.begin(), C.end(), T.begin());
 
                 constInd = N_ - static_cast<std::size_t>(m);
-                for(std::size_t j = 0; j < M; ++j)
-                {
-                    if(B[j] == 1)
-                    {
-                        P[j + constInd] = true;
-                    }
-                }
 
-                for(std::size_t j = 0; j < M; ++j)
+                for(std::size_t j = 0; (j + constInd) < M; ++j)
                 {
-                    C[j] = (C[j] + P[j]) % 2;
+                    C[j + constInd] = (C[j + constInd] + B[j]) % 2;
                 }
 
                 if(L <= static_cast<decltype(L)>(N_ / 2))
@@ -103,19 +75,33 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
         const double T_ = sign * (static_cast<double >(L) - mean) + 2.0/9.0;
 
         if (T_ <= -2.5)
+        {
             ++nu[0];
+        }
         else if (T_ > -2.5 && T_ <= -1.5)
+        {
             ++nu[1];
+        }
         else if (T_ > -1.5 && T_ <= -0.5)
+        {
             ++nu[2];
+        }
         else if (T_ > -0.5 && T_ <= 0.5)
+        {
             ++nu[3];
+        }
         else if (T_ >  0.5 && T_ <= 1.5)
+        {
             ++nu[4];
+        }
         else if (T_ >  1.5 && T_ <= 2.5)
+        {
             ++nu[5];
+        }
         else
+        {
             ++nu[6];
+        }
     }
 
     double chi2 = 0;

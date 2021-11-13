@@ -19,8 +19,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/nistpp/include)
 
 add_subdirectory(nistpp)
 
-add_subdirectory(test_util)
-
 enable_testing()
 add_subdirectory(unit_tests)
 

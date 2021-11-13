@@ -12,8 +12,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 double psi2(const BitsStorage::bits_t& bits, std::size_t m)
 {
     if(m == 0)
@@ -54,7 +52,7 @@ double psi2(const BitsStorage::bits_t& bits, std::size_t m)
     return sum;
 }
 
-return_t SerialTest(const BitsStorage& data, std::size_t M)
+return_t SerialTest(const BitsStorage &data, std::size_t M, std::array<double, 2> &P)
 {
     const auto& bits = data.GetBits();
 
@@ -66,10 +64,11 @@ return_t SerialTest(const BitsStorage& data, std::size_t M)
     const auto del2 = psim0 - 2.0 * psim1 + psim2;
 
     const auto powM     = std::pow(2, M - 1) / 2.0;
-    const auto p_value1 = boost::math::gamma_q(powM, del1/2.0);
-    const auto p_value2 = boost::math::gamma_q(powM, del2/2.0);
 
-    const auto minP = std::fmin(p_value1, p_value2);
+    P[0] = boost::math::gamma_q(powM, del1/2.0);
+    P[1] = boost::math::gamma_q(powM, del2/2.0);
+
+    const auto minP = std::fmin(P[0], P[1]);
 
     return {minP >= threshold, minP};
 }

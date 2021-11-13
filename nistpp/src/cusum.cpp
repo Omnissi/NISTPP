@@ -12,8 +12,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 double normal(double x)
 {
     constexpr auto sqrt2 = sprout::sqrt(2);
@@ -21,7 +19,7 @@ double normal(double x)
     return (1.0 + std::erf(x/sqrt2)) / 2.0;
 }
 
-return_t CumulativeSumsTest(const BitsStorage& data)
+return_t CumulativeSumsTest(const BitsStorage &data, std::array<double, 2> &P)
 {
     ssize_t S   = 0;
     ssize_t sup = 0;
@@ -68,7 +66,7 @@ return_t CumulativeSumsTest(const BitsStorage& data)
         sum2 -= normal((static_cast<double>((4 * k + 1) * z)) / sqrtn);
     }
 
-    const double p_value_f = 1.0 - sum1 + sum2;
+    P[0] = 1.0 - sum1 + sum2;
 
     begin = (-n / zrev + 1) / 4;
     end   = (n / zrev - 1) / 4;
@@ -87,8 +85,8 @@ return_t CumulativeSumsTest(const BitsStorage& data)
         sum2 -= normal((static_cast<double>((4 * k + 1) * zrev)) / sqrtn);
     }
 
-    const double p_value_b = 1.0 - sum1 + sum2;
-    const double minP      = std::fmin(p_value_b, p_value_f);
+    P[1] = 1.0 - sum1 + sum2;
+    const double minP      = std::fmin(P[0], P[1]);
 
     return {minP >= threshold, minP};
 }

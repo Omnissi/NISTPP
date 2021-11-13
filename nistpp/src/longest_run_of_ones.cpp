@@ -11,7 +11,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
 constexpr size_t  minimalBits   = 128;
 
 return_t LongestRunOfOnesTest(const BitsStorage& data)

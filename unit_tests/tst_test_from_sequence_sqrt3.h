@@ -128,7 +128,8 @@ TEST_F(nistpp_sequence_test_sqrt3, Linear)
 
 TEST_F(nistpp_sequence_test_sqrt3, Serial)
 {
-    auto res = nistpp::SerialTest(*bitsStorage_, 16);
+    std::array<double, 2> P;
+    auto res = nistpp::SerialTest(*bitsStorage_, 16, P);
 
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.180826));
 }
@@ -142,7 +143,8 @@ TEST_F(nistpp_sequence_test_sqrt3, Approximate)
 
 TEST_F(nistpp_sequence_test_sqrt3, Cusum)
 {
-    auto res = nistpp::CumulativeSumsTest(*bitsStorage_);
+    std::array<double, 2> P;
+    auto res = nistpp::CumulativeSumsTest(*bitsStorage_, P);
 
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.605167));
 }

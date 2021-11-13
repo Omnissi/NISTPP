@@ -8,8 +8,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold             = 0.01;
-
 double computePi(std::size_t u, double eta)
 {
     if (u == 0)

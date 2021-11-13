@@ -11,8 +11,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
 {
     constexpr std::size_t K     = 6;

@@ -8,8 +8,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 return_t FftTest(const BitsStorage &data)
 {
     const auto N = data.NumberOfBits();

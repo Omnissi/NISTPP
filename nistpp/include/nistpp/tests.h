@@ -131,8 +131,9 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M);
 ///
 /// @param[in] data Class contained sequence for test.
 /// @param[in] M    The length in bits of a block.
+/// @param[out] P   Two P-values.
 /// @return @ref nistpp::return_t
-return_t SerialTest(const BitsStorage& data, std::size_t M);
+return_t SerialTest(const BitsStorage &data, std::size_t M, std::array<double, 2> &P);
 
 /// @brief Approximate Entropy Test.
 /// @details As with the Serial test, the focus of this test is the frequency of all possible overlapping
@@ -156,8 +157,9 @@ return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M);
 /// large.
 ///
 /// @param[in] data Class contained sequence for test.
+/// @param[out] P   P-values for cusum-forward and cusum-reverse.
 /// @return @ref nistpp::return_t
-return_t CumulativeSumsTest(const BitsStorage& data);
+return_t CumulativeSumsTest(const BitsStorage &data, std::array<double, 2> &P);
 
 /// @brief Random Excursions Test.
 /// @details The focus of this test is the number of cycles having exactly K visits in a cumulative sum random walk.

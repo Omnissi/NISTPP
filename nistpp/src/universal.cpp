@@ -10,8 +10,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 return_t UniversalTest(const BitsStorage& data)
 {
     constexpr std::array<double, 17> expected_value = {{0, 0, 0, 0, 0, 0, 5.2177052, 6.1962507, 7.1836656,

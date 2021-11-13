@@ -7,7 +7,6 @@
 namespace nistpp
 {
 
-constexpr double        threshold     = 0.01;
 constexpr std::size_t   minimumBits   = 32*32*38;
 
 template<std::size_t M, std::size_t Q>

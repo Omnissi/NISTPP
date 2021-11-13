@@ -11,8 +11,6 @@
 namespace nistpp
 {
 
-constexpr double threshold = 0.01;
-
 return_t RandomExcursionsVariantTest(const BitsStorage& data, std::array<double, 18>& P)
 {
     constexpr std::array<ssize_t, 18> stateX = {{-9, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9}};

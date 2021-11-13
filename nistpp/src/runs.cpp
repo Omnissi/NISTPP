@@ -7,8 +7,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 return_t RunsTest(const BitsStorage& data)
 {
     const auto numberOfBits = data.NumberOfBits();

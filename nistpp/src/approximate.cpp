@@ -13,8 +13,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M)
 {
     std::array<double, 2> ApEn = {};

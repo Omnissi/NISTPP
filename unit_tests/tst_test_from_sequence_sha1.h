@@ -130,7 +130,8 @@ TEST_F(nistpp_sequence_test_sha1, Linear)
 
 TEST_F(nistpp_sequence_test_sha1, Serial)
 {
-    auto res = nistpp::SerialTest(*bitsStorage_, 16);
+    std::array<double, 2> P;
+    auto res = nistpp::SerialTest(*bitsStorage_, 16, P);
 
     EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.760793));
 }
@@ -144,9 +145,11 @@ TEST_F(nistpp_sequence_test_sha1, Approximate)
 
 TEST_F(nistpp_sequence_test_sha1, Cusum)
 {
-    auto res = nistpp::CumulativeSumsTest(*bitsStorage_);
+    std::array<double, 2> P;
+    nistpp::CumulativeSumsTest(*bitsStorage_, P);
 
-    EXPECT_TRUE(EqualWithNistPValue(std::get<1>(res), 0.451231));
+    EXPECT_TRUE(EqualWithNistPValue(P[0], 0.451231));
+    EXPECT_TRUE(EqualWithNistPValue(P[1], 0.550134));
 }
 
 TEST_F(nistpp_sequence_test_sha1, RandomExcursions)

@@ -16,6 +16,9 @@ using return_t = std::pair<bool, double>;
 /// @brief Type of sequence.
 using sequence_t = std::vector<uint8_t>;
 
+/// @brief If P-value < threshold then sequence is not random. Equal ALPHA.
+constexpr double threshold = 0.01;
+
 } // namespace nistpp
 
 #endif // TYPES_H

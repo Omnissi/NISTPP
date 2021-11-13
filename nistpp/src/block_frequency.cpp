@@ -11,8 +11,6 @@
 namespace nistpp
 {
 
-constexpr double  threshold     = 0.01;
-
 return_t BlockFrequencyTest(const BitsStorage &data, std::size_t M)
 {
     const auto numberOfBits = data.NumberOfBits();

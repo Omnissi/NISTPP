@@ -1,6 +1,6 @@
 #include <nistpp/tests.h>
 
-#include "dfft.h"
+#include <kissfft/kissfft.hh>
 
 #include <valarray>
 #include <cmath>
@@ -12,28 +12,28 @@ return_t FftTest(const BitsStorage &data)
 {
     const auto N = data.NumberOfBits();
 
-//    CArray x(N);
-    std::vector<double> x(N);
+    using FFT   = kissfft<double>;
+    using cpx_t = std::complex<double>;
+
+    std::vector<cpx_t> x(N);
     for(std::size_t i = 0; i < N; ++i)
     {
         x[i] = data[i] ? 1 : -1;
     }
 
-    std::vector<double> wsave(2 * N);
-    int ifac[15] = {};
-    __ogg_fdrffti(static_cast<int>(N), wsave.data(), ifac);		/* INITIALIZE WORK ARRAYS */
-    __ogg_fdrfftf(static_cast<int>(N), x.data(), wsave.data(), ifac);	/* APPLY FORWARD FFT */
-//    fft(x);
+    std::vector<cpx_t> res(N);
 
-    std::valarray<double> m(N/2 + 1);
-    m[0] = std::fabs(x[0]);
+    FFT fft(N, false);
+    fft.transform(x.data(), res.data());
 
-    for(size_t i = 0; i < N/2; ++i)
+    std::vector<double> m(N/2 + 1);
+    for(std::size_t i = 0; i < m.size(); ++i)
     {
-        m[i+1] = /*std::fabs(x[i+1]);*/sqrt(pow(x[2*i+1],2)+pow(x[2*i+2],2));
+        m[i] = static_cast<double>(std::abs(res[i]));
     }
+
     size_t count = 0;
-    auto upperBound = std::sqrt(2.995732274 * static_cast<double>(N));
+    const auto upperBound = std::sqrt(2.995732274 * static_cast<double>(N));
     for (size_t i = 0; i < N/2; ++i)
     {
         if (m[i] < upperBound)

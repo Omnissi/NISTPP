@@ -15,8 +15,13 @@ class NistppConan(ConanFile):
 
     def requirements(self):
         self.requires.add("boost/1.73.0")
+        self.requires.add("kissfft/131.1.0")
         if self.options.enable_tests:
             self.requires.add("gtest/cci.20210126")
+
+    def configure(self):
+        self.options["kissfft"].openmp = True
+        self.options["kissfft"].datatype = "double"
 
     def set_version(self):
         self.version = version.get_version(os.path.dirname(os.path.abspath(__file__)))

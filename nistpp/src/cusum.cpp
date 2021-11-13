@@ -21,11 +21,11 @@ double normal(double x)
 
 return_t CumulativeSumsTest(const BitsStorage &data, std::array<double, 2> &P)
 {
-    ssize_t S   = 0;
-    ssize_t sup = 0;
-    ssize_t inf = 0;
-    ssize_t z;
-    ssize_t zrev;
+    ssize_t S    = 0;
+    ssize_t sup  = 0;
+    ssize_t inf  = 0;
+    ssize_t z    = 0;
+    ssize_t zrev = 0;
 
     const auto& bits = data.GetBits();
 

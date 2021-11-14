@@ -24,5 +24,6 @@ IF(${ENABLE_TEST})
     add_subdirectory(unit_tests)
 ENDIF()
 
+install(EXPORT nistpp NAMESPACE nistpp:: DESTINATION cmake)
 install(DIRECTORY nistpp/include/nistpp DESTINATION include)
 install(TARGETS nistpp LIBRARY DESTINATION lib)

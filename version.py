@@ -1,15 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from conans import ConanFile
-from conans.tools import load
-import re
+import os
 
-def get_version(source_dir: str):
-    try:
-        print(source_dir)
-        content = load(source_dir + str("/CMakeLists.txt"))
-        version = re.search(r"NISTPP VERSION (.*)\)", content).group(1)
-        return version.strip()
-    except Exception as e:
-        print(e)
-        return None
+class GitVersion():
+    def __init__(self):
+        os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
+    def version(self):
+        stream = os.popen("git describe --match [0-9]*.[0-9]*.[0-9]* --abbrev=0 --tags")
+        return stream.read().strip()
+
+    def build_number(self):
+        stream = os.popen("git rev-list {}.. --count".format(self.version()))
+        return stream.read().strip()
+
+    def full_version(self):
+        return "{}.{}".format(self.version(), self.build_number())

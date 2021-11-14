@@ -5,7 +5,11 @@ project(nistpp)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Boost COMPONENTS math REQUIRED)
+IF (WIN32)
+    find_package(boost COMPONENTS math REQUIRED)
+ELSE()
+    find_package(Boost COMPONENTS math REQUIRED)
+ENDIF()
 find_package(kissfft REQUIRED)
 
 file(GLOB_RECURSE PROJ_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/*.h*)

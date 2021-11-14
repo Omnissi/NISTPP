@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake, tools
-import version
+from version import GitVersion
 import os
 
 class NistppConan(ConanFile):
@@ -35,7 +35,7 @@ class NistppConan(ConanFile):
         return self._cmake
 
     def set_version(self):
-        self.version = version.get_version(os.path.dirname(os.path.abspath(__file__)))
+        self.version = GitVersion().full_version()
 
     def build(self):
         cmake = self._configure_cmake()

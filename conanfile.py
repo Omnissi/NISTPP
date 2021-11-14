@@ -30,6 +30,7 @@ class NistppConan(ConanFile):
         if self._cmake:
             return self._cmake
         cmake = CMake(self)
+        cmake.definitions["ENABLE_TEST"] = self.options.enable_tests
         cmake.configure()
         self._cmake = cmake
         return self._cmake

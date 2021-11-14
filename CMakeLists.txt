@@ -19,8 +19,10 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/nistpp/include)
 
 add_subdirectory(nistpp)
 
-enable_testing()
-add_subdirectory(unit_tests)
+IF(${ENABLE_TEST})
+    enable_testing()
+    add_subdirectory(unit_tests)
+ENDIF()
 
 install(DIRECTORY nistpp/include/nistpp DESTINATION include)
 install(TARGETS nistpp LIBRARY DESTINATION lib)

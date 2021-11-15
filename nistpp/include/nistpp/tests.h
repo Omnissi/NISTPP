@@ -8,8 +8,8 @@
 #define TESTS_H
 
 #include <cstddef>
-#include <nistpp/bits_storage.h>
-#include <nistpp/types.h>
+#include "bits_storage.h"
+#include "types.h"
 
 namespace nistpp
 {

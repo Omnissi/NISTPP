@@ -1,7 +1,7 @@
 #ifndef BITS_STORAGE_H
 #define BITS_STORAGE_H
 
-#include <nistpp/types.h>
+#include "types.h"
 
 #include <vector>
 #include <bitset>

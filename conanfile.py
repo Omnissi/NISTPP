@@ -48,3 +48,4 @@ class NistppConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.build_modules = [ "cmake/nistpp.cmake" ]
+        self.cpp_info.libs = ["nistpp"]

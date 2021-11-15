@@ -1,6 +1,8 @@
 #ifndef MATH_HELPERS_H
 #define MATH_HELPERS_H
 
+#pragma once
+
 #include <cstdint>
 #include <limits>
 #include <cmath>

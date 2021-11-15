@@ -15,15 +15,9 @@ endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Sprout/)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/nistpp/include)
-
 add_subdirectory(nistpp)
 
 IF(${ENABLE_TEST})
     enable_testing()
     add_subdirectory(unit_tests)
 ENDIF()
-
-install(EXPORT nistpp NAMESPACE nistpp:: DESTINATION cmake)
-install(DIRECTORY nistpp/include/nistpp DESTINATION include)
-install(TARGETS nistpp LIBRARY DESTINATION lib)

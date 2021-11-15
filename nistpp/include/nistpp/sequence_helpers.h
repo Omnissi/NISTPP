@@ -1,7 +1,9 @@
 #ifndef SEQUENCE_HELPERS_H
 #define SEQUENCE_HELPERS_H
 
-#include "types.h"
+#pragma once
+
+#include <nistpp/types.h>
 
 #include <string>
 

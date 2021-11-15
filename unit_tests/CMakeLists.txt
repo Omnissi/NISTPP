@@ -8,6 +8,8 @@ find_package(Boost COMPONENTS filesystem REQUIRED)
 find_package(Threads REQUIRED)
 find_package(GTest REQUIRED)
 
+include_directories(${CMAKE_SOURCE_DIR}/nistpp/include)
+
 file(GLOB_RECURSE PROJ_TESTS
    tst_test_from_sequence_sha1.h
    tst_test_from_sequence_sqrt3.h
@@ -18,6 +20,8 @@ file(GLOB_RECURSE PROJ_TESTS
    tst_longest_run_of_ones.h
    tst_non_overlapping_template.h
    tst_linear.h)
+
+
 
 set(${PROJECT_NAME}_defs FILE_PREFIX="${CMAKE_CURRENT_SOURCE_DIR}/files")
 

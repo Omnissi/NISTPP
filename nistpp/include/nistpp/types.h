@@ -1,5 +1,7 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef NISTPP_TYPES_H
+#define NISTPP_TYPES_H
+
+#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -21,4 +23,4 @@ constexpr double threshold = 0.01;
 
 } // namespace nistpp
 
-#endif // TYPES_H
+#endif // NISTPP_TYPES_H

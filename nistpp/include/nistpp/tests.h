@@ -4,12 +4,14 @@
  * @author Negodyaev Sergey (negodyaev.sergey@outlook.com)
  * @details This file contains declarations of all tests.
  */
-#ifndef TESTS_H
-#define TESTS_H
+#ifndef NISTPP_TESTS_H
+#define NISTPP_TESTS_H
+
+#pragma once
 
 #include <cstddef>
-#include "bits_storage.h"
-#include "types.h"
+#include <nistpp/bits_storage.h>
+#include <nistpp/types.h>
 
 namespace nistpp
 {
@@ -189,4 +191,4 @@ return_t RandomExcursionsVariantTest(const BitsStorage& data, std::array<double,
 
 } // namespace nistpp
 
-#endif // TESTS_H
+#endif // NISTPP_TESTS_H

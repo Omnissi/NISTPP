@@ -14,7 +14,7 @@
 
 using namespace testing;
 
-TEST(nistpp, linear)
+TEST(nistpp, serial)
 {
     boost::filesystem::path path(std::string(FILE_PREFIX) + std::string("/data.e"));
     if(!boost::filesystem::exists(path))
@@ -42,7 +42,8 @@ TEST(nistpp, linear)
 
     nistpp::BitsStorage bits(data);
 
-    auto t = nistpp::LinearComplexityTest(bits, 1000);
+    std::array<double, 2> P;
+    auto t = nistpp::SerialTest(bits, 2, P);
 
     EXPECT_TRUE(std::fabs(std::get<1>(t) - 0.845406) < 1e-6);
 }

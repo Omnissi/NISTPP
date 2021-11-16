@@ -8,7 +8,7 @@
 //#include "tst_runs.h"
 //#include "tst_longest_run_of_ones.h"
 //#include "tst_non_overlapping_template.h"
-//#include "tst_linear.h"
+#include "tst_linear.h"
 
 #include <omp.h>
 

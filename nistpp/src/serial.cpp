@@ -63,10 +63,8 @@ return_t SerialTest(const BitsStorage &data, std::size_t M, std::array<double, 2
     const auto del1 = psim0 - psim1;
     const auto del2 = psim0 - 2.0 * psim1 + psim2;
 
-    const auto powM     = std::pow(2, M - 1) / 2.0;
-
-    P[0] = boost::math::gamma_q(powM, del1/2.0);
-    P[1] = boost::math::gamma_q(powM, del2/2.0);
+    P[0] = boost::math::gamma_q(std::pow(2, M - 1) / 2.0, del1/2.0);
+    P[1] = boost::math::gamma_q(std::pow(2, M - 2) / 2.0, del2/2.0);
 
     const auto minP = std::fmin(P[0], P[1]);
 

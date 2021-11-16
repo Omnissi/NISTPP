@@ -105,6 +105,16 @@ TEST_F(nistpp_sequence_test_sha1, nonOverlapping)
     nistpp::NonOverlappingTemplateTest(*bitsStorage_, 9, P);
 
     EXPECT_TRUE(EqualWithNistPValue(P[0], 0.496601));
+    EXPECT_TRUE(EqualWithNistPValue(P[1], 0.421114));
+    EXPECT_TRUE(EqualWithNistPValue(P[2], 0.762228));
+    EXPECT_TRUE(EqualWithNistPValue(P[3], 0.313147));
+    EXPECT_TRUE(EqualWithNistPValue(P[4], 0.267553));
+    EXPECT_TRUE(EqualWithNistPValue(P[5], 0.569810));
+    EXPECT_TRUE(EqualWithNistPValue(P[6], 0.918072));
+    EXPECT_TRUE(EqualWithNistPValue(P[7], 0.314578));
+    EXPECT_TRUE(EqualWithNistPValue(P[8], 0.987461));
+    EXPECT_TRUE(EqualWithNistPValue(P[9], 0.129969));
+    EXPECT_TRUE(EqualWithNistPValue(P[10],0.001239));
 }
 
 TEST_F(nistpp_sequence_test_sha1, Overlapping)

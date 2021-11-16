@@ -40,8 +40,6 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
     for(std::size_t i = 0; i < numberOfRows; ++i)
     {
         std::vector<std::size_t> Wj(N);
-        auto begin  = bits.begin();
-        auto end    = begin + m;
 
         auto sec_it = GetTemplatesSequence(i, m);
         auto tbegin = std::get<0>(sec_it);
@@ -49,14 +47,17 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
 
         for(std::size_t j = 0; j < N; ++j)
         {
+            auto begin  = bits.begin() + static_cast<ssize_t>(j * M);
+            auto end    = begin + static_cast<ssize_t>(m);
+
             std::size_t W_obs = 0;
             for(std::size_t k = 0; k < M-m; ++k, ++begin, ++end)
             {
                 if(std::equal(tbegin, tend, begin, end))
                 {
                     ++W_obs;
-                    begin += m-1;
-                    end += m-1;
+                    begin += static_cast<ssize_t>(m - 1);
+                    end += static_cast<ssize_t>(m - 1);
                     k += m-1;
                 }
             }

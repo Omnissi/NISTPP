@@ -115,6 +115,18 @@ TEST_F(nistpp_sequence_test_sha1, nonOverlapping)
     EXPECT_TRUE(EqualWithNistPValue(P[8], 0.987461));
     EXPECT_TRUE(EqualWithNistPValue(P[9], 0.129969));
     EXPECT_TRUE(EqualWithNistPValue(P[10],0.001239));
+
+    EXPECT_TRUE(EqualWithNistPValue(P[137], 0.498486));
+    EXPECT_TRUE(EqualWithNistPValue(P[138], 0.924418));
+    EXPECT_TRUE(EqualWithNistPValue(P[139], 0.575407));
+    EXPECT_TRUE(EqualWithNistPValue(P[140], 0.494166));
+    EXPECT_TRUE(EqualWithNistPValue(P[141], 0.967612));
+    EXPECT_TRUE(EqualWithNistPValue(P[142], 0.458325));
+    EXPECT_TRUE(EqualWithNistPValue(P[143], 0.927039));
+    EXPECT_TRUE(EqualWithNistPValue(P[144], 0.105639));
+    EXPECT_TRUE(EqualWithNistPValue(P[145], 0.017200));
+    EXPECT_TRUE(EqualWithNistPValue(P[146], 0.390641));
+    EXPECT_TRUE(EqualWithNistPValue(P[147], 0.541378));
 }
 
 TEST_F(nistpp_sequence_test_sha1, Overlapping)

@@ -45,7 +45,8 @@ TEST(nistpp, serial)
     std::array<double, 2> P;
     auto t = nistpp::SerialTest(bits, 2, P);
 
-    EXPECT_TRUE(std::fabs(std::get<1>(t) - 0.845406) < 1e-6);
+    EXPECT_TRUE(std::fabs(P[0] - 0.843764) < 1e-6);
+    EXPECT_TRUE(std::fabs(P[1] - 0.561915) < 1e-6);
 }
 
 #endif // TST_LINEAR_H

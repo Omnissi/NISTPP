@@ -32,7 +32,6 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
 
     auto        numberOfRows = GetNumberOfRows(m);
 
-    std::atomic<double> minP(std::numeric_limits<double>::max());
     const auto& bits    = data.GetBits();
     numberOfRows        = std::min(numberOfRows, maxNumOfTemplates);
     P.resize(numberOfRows);
@@ -51,7 +50,7 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
         for(std::size_t j = 0; j < N; ++j)
         {
             std::size_t W_obs = 0;
-            for(std::size_t k = 0; k < M-m+1; ++k, ++begin, ++end)
+            for(std::size_t k = 0; k < M-m; ++k, ++begin, ++end)
             {
                 if(std::equal(tbegin, tend, begin, end))
                 {
@@ -71,10 +70,11 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
         }
 
         P[i] = boost::math::gamma_q(N/2.0, chi2/2.0);
-        minP.store(std::fmin(P[i], minP.load()));
     }
 
-    return {minP.load() >= threshold, minP.load()};
+    const double minP = *std::min_element(P.begin(), P.end());
+
+    return {minP >= threshold, minP};
 }
 
 } // namespace nistpp

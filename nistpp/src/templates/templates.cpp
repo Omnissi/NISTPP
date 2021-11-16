@@ -31,15 +31,14 @@ std::pair<iterator_t, iterator_t> GetTemplatesSequence(std::size_t i, std::size_
     case 5: return ret_it(template5);
     case 6: return ret_it(template6);
     case 7: return ret_it(template7);
-    case 8: return ret_it(template8);;
-    case 9: return ret_it(template9);;
-    case 10: return ret_it(template10);;
-    case 11: return ret_it(template11);;
-    case 12: return ret_it(template12);;
-    case 13: return ret_it(template13);;
-    case 14: return ret_it(template14);;
-    case 15: return ret_it(template15);;
-    case 16: return ret_it(template16);;
+    case 8: return ret_it(template8);
+    case 9: return ret_it(template9);
+    case 10: return ret_it(template10);
+    case 11: return ret_it(template11);
+    case 12: return ret_it(template12);
+    case 14: return ret_it(template14);
+    case 15: return ret_it(template15);
+    case 16: return ret_it(template16);
     }
 #undef ret_it
 

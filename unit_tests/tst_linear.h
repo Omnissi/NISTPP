@@ -32,7 +32,7 @@ TEST(nistpp, serial)
     std::string res;
     std::string tmp;
 
-    while(std::getline(stream, tmp) && res.size() <= 1e6)
+    while(std::getline(stream, tmp) && static_cast<double>(res.size()) <= 1e6)
     {
         res += tmp;
     }
@@ -42,8 +42,8 @@ TEST(nistpp, serial)
 
     nistpp::BitsStorage bits(data);
 
-    std::array<double, 2> P;
-    auto t = nistpp::SerialTest(bits, 2, P);
+    std::array<double, 2> P{};
+    nistpp::SerialTest(bits, 2, P);
 
     EXPECT_TRUE(std::fabs(P[0] - 0.843764) < 1e-6);
     EXPECT_TRUE(std::fabs(P[1] - 0.561915) < 1e-6);

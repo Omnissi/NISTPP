@@ -51,7 +51,7 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
             auto end    = begin + static_cast<ssize_t>(m);
 
             std::size_t W_obs = 0;
-            for(std::size_t k = 0; k < M-m; ++k, ++begin, ++end)
+            for(std::size_t k = 0; k < M-m+1; ++k, ++begin, ++end)
             {
                 if(std::equal(tbegin, tend, begin, end))
                 {

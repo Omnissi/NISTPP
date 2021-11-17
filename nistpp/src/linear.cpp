@@ -1,12 +1,11 @@
-#include "nistpp/bits_storage.h"
-
-#include <cstddef>
+#include <nistpp/bits_storage.h>
+#include <nistpp/math_helpers.h>
 #include <nistpp/tests.h>
 
+#include <cstddef>
 #include <cmath>
-
-#include <boost/math/special_functions/gamma.hpp>
 #include <vector>
+#include <atomic>
 
 namespace nistpp
 {
@@ -111,7 +110,7 @@ return_t LinearComplexityTest(const BitsStorage& data, std::size_t M)
         chi2 += std::pow(nu[i] - static_cast<double >(N) * pi[i], 2) / (static_cast<double >(N) * pi[i]);
     }
 
-    const double p_value = boost::math::gamma_q(K/2.0, chi2/2.0);
+    const double p_value = igamc(K/2.0, chi2/2.0);
 
     return {p_value >= threshold, p_value};
 }

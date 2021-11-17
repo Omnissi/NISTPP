@@ -5,8 +5,6 @@
 
 #include <cmath>
 
-#include <boost/math/distributions.hpp>
-
 #include <sprout/math.hpp>
 
 namespace nistpp

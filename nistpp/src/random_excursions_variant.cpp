@@ -1,12 +1,11 @@
 #include "nistpp/bits_storage.h"
 #include "nistpp/types.h"
-
 #include <nistpp/tests.h>
 
 #include <cmath>
+#include <limits>
 #include <vector>
-
-#include <boost/math/special_functions/gamma.hpp>
+#include <algorithm>
 
 namespace nistpp
 {

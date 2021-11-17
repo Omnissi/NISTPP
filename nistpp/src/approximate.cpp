@@ -1,12 +1,11 @@
 #include "nistpp/bits_storage.h"
 #include "nistpp/types.h"
+#include "nistpp/math_helpers.h"
 
 #include <nistpp/tests.h>
 
 #include <cmath>
 #include <vector>
-
-#include <boost/math/special_functions/gamma.hpp>
 
 #include <sprout/math.hpp>
 
@@ -64,7 +63,7 @@ return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M)
 
     const auto apen    = ApEn[0] - ApEn[1];
     const auto chi2    = 2.0 * static_cast<double>(bits.size()) * (sprout::log(2) - apen);
-    const auto p_value = boost::math::gamma_q(std::pow(2, M-1), chi2/2.0);
+    const auto p_value = igamc(std::pow(2, M-1), chi2/2.0);
 
     return {p_value >= threshold, p_value};
 }

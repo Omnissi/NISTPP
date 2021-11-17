@@ -1,12 +1,10 @@
 #include <nistpp/tests.h>
+#include <nistpp/math_helpers.h>
 
 #include <cmath>
-#include <numeric>
 #include <stdexcept>
 
 #include "help_function.h"
-
-#include <boost/math/special_functions/gamma.hpp>
 
 namespace nistpp
 {
@@ -111,7 +109,7 @@ return_t LongestRunOfOnesTest(const BitsStorage& data)
         chi2 += std::pow(static_cast<double>(nu[i]) - static_cast<double>(numberOfBlock) * pi[i], 2) / (static_cast<double>(numberOfBlock) * pi[i]);
     }
 
-    double P = boost::math::gamma_q((static_cast<double>(K)/2.0), chi2/2.0);
+    double P = igamc((static_cast<double>(K)/2.0), chi2/2.0);
 
     return {P >= threshold, P};
 }

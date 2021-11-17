@@ -1,12 +1,11 @@
-#include "nistpp/bits_storage.h"
-#include "nistpp/types.h"
-
+#include <nistpp/bits_storage.h>
+#include <nistpp/types.h>
 #include <nistpp/tests.h>
+#include <nistpp/math_helpers.h>
 
 #include <cmath>
 #include <vector>
-
-#include <boost/math/special_functions/gamma.hpp>
+#include <limits>
 
 namespace nistpp
 {
@@ -106,7 +105,7 @@ return_t RandomExcursionsTest(const BitsStorage &data, std::array<double, 8>& P)
             sum += std::pow(static_cast<double>(nu[j][i]) - tmp, 2) / tmp;
         }
 
-        P[i] = boost::math::gamma_q(2.5, sum / 2.0);
+        P[i] = igamc(2.5, sum / 2.0);
         minP = std::fmin(minP, P[i]);
     }
 

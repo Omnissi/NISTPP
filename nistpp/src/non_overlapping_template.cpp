@@ -6,7 +6,6 @@
 
 #include <cmath>
 
-#include <boost/math/special_functions/gamma.hpp>
 #include <utility>
 
 namespace nistpp
@@ -70,7 +69,7 @@ return_t NonOverlappingTemplateTest(const BitsStorage& data, std::size_t m, std:
             chi2 += std::pow((static_cast<double>(Wj[j]) - lambda)/sqrVarWj, 2);
         }
 
-        P[i] = boost::math::gamma_q(N/2.0, chi2/2.0);
+        P[i] = igamc(N/2.0, chi2/2.0);
     }
 
     const double minP = *std::min_element(P.begin(), P.end());

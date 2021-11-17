@@ -1,5 +1,4 @@
 #include <nistpp/tests.h>
-#include <nistpp/math_helpers.h>
 
 #include <cmath>
 

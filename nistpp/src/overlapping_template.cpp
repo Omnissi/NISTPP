@@ -1,9 +1,8 @@
 #include <cstddef>
 #include <nistpp/tests.h>
+#include <nistpp/math_helpers.h>
 
 #include <cmath>
-
-#include <boost/math/special_functions/gamma.hpp>
 
 namespace nistpp
 {
@@ -73,7 +72,7 @@ return_t OverlappingTemplateTest(const BitsStorage& data, std::size_t m)
         chi2 += pow(static_cast<double>(nu[i]) - static_cast<double>(N)*pi[i], 2)/(static_cast<double>(N)*pi[i]);
     }
 
-    double p_value = boost::math::gamma_q(K/2.0, chi2/2.0);
+    double p_value = igamc(K/2.0, chi2/2.0);
 
     return {p_value >= threshold, p_value};
 }

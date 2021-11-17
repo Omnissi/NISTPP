@@ -1,12 +1,11 @@
 #include <nistpp/tests.h>
+#include <nistpp/math_helpers.h>
 
 #include <cmath>
 #include <numeric>
 #include <stdexcept>
 
 #include "help_function.h"
-
-#include <boost/math/special_functions/gamma.hpp>
 
 namespace nistpp
 {
@@ -34,7 +33,7 @@ return_t BlockFrequencyTest(const BitsStorage &data, std::size_t M)
     }
 
     double chi_squared = 4.0 * static_cast<double>(M) * sum;
-    double P           = boost::math::gamma_q(static_cast<double>(numberOfBlocks) / 2.0, chi_squared / 2.0);
+    double P           = igamc(static_cast<double>(numberOfBlocks) / 2.0, chi_squared / 2.0);
 
     return {P >= threshold, P};
 }

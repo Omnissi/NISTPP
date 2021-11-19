@@ -19,7 +19,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(${PROJECT_NAME} STATIC ${PROJ_HEADER} ${PROJ_SOURCE})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC Boost::boost kissfft::kissfft-double-openmp)
+target_link_libraries(${PROJECT_NAME} PRIVATE kissfft::kissfft-double-openmp)
 
 set(HEADERS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
 

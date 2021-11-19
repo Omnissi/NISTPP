@@ -1,5 +1,5 @@
-#ifndef BITS_STORAGE_H
-#define BITS_STORAGE_H
+#ifndef NISTPPP_BITS_STORAGE_H
+#define NISTPPP_BITS_STORAGE_H
 
 #pragma once
 
@@ -28,7 +28,7 @@ public:
 
     /// @brief Class constructer.
     /// @param[in] data Data for tests. (1 byte = 1 byte data)
-    BitsStorage(const sequence_t& data);
+    explicit BitsStorage(const sequence_t& data);
 
     /// @brief Set data for tests
     /// @param[in] data Data for tests. (1 byte = 1 bit data)
@@ -59,4 +59,4 @@ private:
 
 } // namespace nistpp
 
-#endif // BITS_STORAGE_H
+#endif // NISTPPP_BITS_STORAGE_H

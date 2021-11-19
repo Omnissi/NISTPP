@@ -8,12 +8,13 @@ class NistppConan(ConanFile):
     author = "Negodyaev Sergey (negodyaev.sergey@outlook.com)"
     description = "NIST test on C++"
     url = "https://git.omnissi-factory.ru/Omnissi/NISTPP"
-    settings = "os", "compiler", "build_type", "arch"
+    settings = "os", "compiler", "build_type", "arch", "os_build"
     options = {"shared": [True, False], "fPIC": [True, False], "enable_tests": [True, False]}
     default_options = {"shared": False, "fPIC": True, "enable_tests": True}
     generators = ["cmake", "cmake_find_package", "cmake_paths"]
 
-    exports = ["CMakeLists.txt", "version.py"]
+    exports_sources = ["nistpp/*", "Sprout/*", "unit_tests/*", "cmake/*", "CMakeLists.txt"]
+    exports = ["conanfile.py", "version.py", "version.h.in"]
     _cmake = None
 
     def requirements(self):
@@ -31,6 +32,7 @@ class NistppConan(ConanFile):
             return self._cmake
         cmake = CMake(self)
         cmake.definitions["ENABLE_TEST"] = self.options.enable_tests
+        cmake.definitions["OS_BUILD"] = self.settings.os_build
         cmake.configure()
         self._cmake = cmake
         return self._cmake

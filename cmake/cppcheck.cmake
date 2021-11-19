@@ -1,8 +1,8 @@
 ## путь к выходному файлу статического анализатора cppcheck
-set( CPPCHECK_OUT  ${CMAKE_INSTALL_PREFIX}/cppcheck-report.xml )
+set( CPPCHECK_OUT  ${CMAKE_BINARY_DIR}/cppcheck-report.xml )
 
 ## каталог исходных кодов проекта
-set( CPPCHECK_PROJECT_SRC ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/include )
+set( CPPCHECK_PROJECT_SRC ${CMAKE_SOURCE_DIR}/nistpp )
 
 
 ## опции запуска статического анализатора cppcheck

@@ -1,0 +1,18 @@
+#pragma once
+#include <cstddef>
+#include <string>
+
+namespace nistpp
+{
+namespace version 
+{
+constexpr std::size_t major = @NISTPP_VERSION_MAJOR@;
+constexpr std::size_t minor = @NISTPP_VERSION_MINOR@;
+constexpr std::size_t patch = @NISTPP_VERSION_PATCH@;
+constexpr std::size_t tweak = @NISTPP_VERSION_TWEAK@;
+constexpr const char* str = "@NISTPP_VERSION@";
+constexpr const char* os = "@CONAN_SETTINGS_OS@";
+constexpr const char* compiler = "@CONAN_SETTINGS_COMPILER@-@CONAN_SETTINGS_COMPILER_VERSION@";
+constexpr const char* build_type = "@CONAN_SETTINGS_BUILD_TYPE@";
+} // version
+} // nistpp

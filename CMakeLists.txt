@@ -2,9 +2,15 @@ cmake_minimum_required(VERSION 3.5)
 
 project(NISTPP)
 
-include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR}/cmake)
 
-include(cmake/cxx_flags.cmake)
+include(conan)
+include(cxx_flags)
+include(cppcheck)
+
+configure_file(${CMAKE_SOURCE_DIR}/version.h.in version.h)
 
 find_package(OpenMP REQUIRED)
 if (OPENMP_FOUND)

@@ -5,7 +5,7 @@ project(nistpp)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-IF (WIN32)
+IF (${OS_BUILD} STREQUAL "Windows")
     find_package(boost COMPONENTS math REQUIRED)
 ELSE()
     find_package(Boost COMPONENTS math REQUIRED)
@@ -44,3 +44,4 @@ install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
 
 
 install(EXPORT ${PROJECT_NAME} NAMESPACE ${PROJECT_NAME}:: DESTINATION cmake)
+install(FILES ${CMAKE_BINARY_DIR}/version.h DESTINATION include/nistpp)

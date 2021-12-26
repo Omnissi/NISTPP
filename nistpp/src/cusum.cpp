@@ -5,14 +5,14 @@
 
 #include <cmath>
 
-#include <sprout/math.hpp>
+#include <gcem.hpp>
 
 namespace nistpp
 {
 
 double normal(double x)
 {
-    constexpr auto sqrt2 = sprout::sqrt(2);
+    constexpr auto sqrt2 = gcem::sqrt(2);
 
     return (1.0 + std::erf(x/sqrt2)) / 2.0;
 }

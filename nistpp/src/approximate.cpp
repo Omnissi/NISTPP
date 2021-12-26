@@ -7,7 +7,7 @@
 #include <cmath>
 #include <vector>
 
-#include <sprout/math.hpp>
+#include <gcem.hpp>
 
 namespace nistpp
 {
@@ -62,7 +62,7 @@ return_t ApproximateEntropyTest(const BitsStorage& data, std::size_t M)
     }
 
     const auto apen    = ApEn[0] - ApEn[1];
-    const auto chi2    = 2.0 * static_cast<double>(bits.size()) * (sprout::log(2) - apen);
+    const auto chi2    = 2.0 * static_cast<double>(bits.size()) * (gcem::log(2) - apen);
     const auto p_value = igamc(std::pow(2, M-1), chi2/2.0);
 
     return {p_value >= threshold, p_value};

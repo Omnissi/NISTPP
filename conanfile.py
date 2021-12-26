@@ -13,13 +13,14 @@ class NistppConan(ConanFile):
     default_options = {"shared": False, "fPIC": True, "enable_tests": True}
     generators = ["cmake", "cmake_find_package", "cmake_paths"]
 
-    exports_sources = ["nistpp/*", "Sprout/*", "unit_tests/*", "cmake/*", "CMakeLists.txt"]
+    exports_sources = ["nistpp/*", "unit_tests/*", "cmake/*", "CMakeLists.txt"]
     exports = ["conanfile.py", "version.py", "version.h.in"]
     _cmake = None
 
     def requirements(self):
         self.requires.add("boost/1.73.0")
         self.requires.add("kissfft/131.1.0")
+        self.requires.add("gcem/1.13.1")
         if self.options.enable_tests:
             self.requires.add("gtest/cci.20210126")
 

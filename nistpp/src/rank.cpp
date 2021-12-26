@@ -1,6 +1,6 @@
 #include <nistpp/tests.h>
 
-#include <sprout/math.hpp>
+#include <gcem.hpp>
 
 #include <cmath>
 
@@ -185,14 +185,14 @@ constexpr double calcProduct(ssize_t r)
     double res = 1;
     for(ssize_t i = 0; i <= r-1; ++i)
     {
-        res *= sprout::pow(1.0 - static_cast<double>(sprout::pow(2, i-32)), 2) / (1.0 - sprout::pow(2, i-r));
+        res *= gcem::pow(1.0 - gcem::pow(2.0, i-32), 2) / (1.0 - gcem::pow(2.0, i-r));
     }
     return res;
 }
 
 constexpr double pNumber(ssize_t r)
 {
-    return sprout::pow(2, r*(32+32-r) - 32*32) * calcProduct(r);
+    return gcem::pow(2.0, r*(32+32-r) - 32*32) * calcProduct(r);
 }
 
 return_t RankTest(const BitsStorage &data)

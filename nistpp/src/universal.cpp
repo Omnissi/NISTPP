@@ -4,8 +4,7 @@
 #include <cmath>
 
 #include "nistpp/types.h"
-#include "sprout/math/sqrt.hpp"
-#include "sprout/valarray/exponential.hpp"
+#include <gcem.hpp>
 
 namespace nistpp
 {
@@ -68,12 +67,12 @@ return_t UniversalTest(const BitsStorage& data)
                 decRep += static_cast<std::size_t>(std::pow(2, L - 1 - j));
             }
         }
-        sum += std::log(i - T[decRep]) / sprout::log(2);
+        sum += std::log(i - T[decRep]) / gcem::log(2);
         T[decRep] = i;
     }
 
     const double phi     = sum / static_cast<double>(K);
-    const double arg     = std::fabs(phi-expected_value[L])/(sprout::sqrt(2) * sigma);
+    const double arg     = std::fabs(phi-expected_value[L])/(gcem::sqrt(2) * sigma);
     const auto   p_value = std::erfc(arg);
 
     return {p_value >= threshold, p_value};

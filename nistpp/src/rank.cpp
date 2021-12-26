@@ -34,6 +34,16 @@ public:
         return matrix_[ind];
     }
 
+    typename matrix_t::const_iterator begin() const noexcept
+    {
+        return matrix_.begin();
+    }
+
+    typename matrix_t::const_iterator end() const noexcept
+    {
+        return matrix_.end();
+    }
+
     void swap_rows(std::size_t a, std::size_t b)
     {
         std::swap(matrix_[a], matrix_[b]);
@@ -115,23 +125,10 @@ std::size_t find_unit_element_and_swap_backward(const std::size_t& i, BitsMatrix
 template<std::size_t M, std::size_t Q>
 std::size_t determine_rank(BitsMatrix<M, Q>& matrix)
 {
-    /* DETERMINE RANK, THAT IS, COUNT THE NUMBER OF NONZERO ROWS */
-
     std::size_t rank = std::min(M, Q);
-    for(std::size_t i = 0; i < M; ++i)
+    for(const auto & el : matrix)
     {
-        bool allZeroes = true;
-        auto& bits = matrix[i];
-        for (std::size_t j = 0; j < Q; ++j)
-        {
-            if(bits[j] == 1)
-            {
-                allZeroes = false;
-                break;
-            }
-        }
-
-        if(allZeroes)
+        if(el.none())
         {
             --rank;
         }
@@ -218,14 +215,16 @@ return_t RankTest(const BitsStorage &data)
         BitsMatrix<32, 32> matrix(bits, k);
         auto rank = computeRank(matrix);
 
-        if(rank == 32)
+        switch (rank)
         {
-            ++F_32;
-        }
-
-        if(rank == 31)
-        {
-            ++F_31;
+            case 31:
+                ++F_31;
+                break;
+            case 32:
+                ++F_32;
+                break;
+            default:
+                break;
         }
     }
 
